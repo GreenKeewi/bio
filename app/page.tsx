@@ -18,7 +18,7 @@ const BIO =
   "Been breaking and un-breaking computers since I was nine — turns out that's a personality trait now, not a phase. Folia, Solin, and Fable are the evidence.";
 
 const LINKS: Link[] = [
-  { label: "Email", href: "mailto:harshithseta@gmail.com", icon: "email" },
+  { label: "Email", href: "mailto:harshithseeta@gmail.com", icon: "email" },
   { label: "GitHub", href: "https://github.com/GreenKeewi", icon: "github" },
 ];
 
