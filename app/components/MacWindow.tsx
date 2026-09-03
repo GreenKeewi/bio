@@ -48,10 +48,10 @@ export default function MacWindow({
 
   return (
     <div
-      className={`fixed inset-0 flex items-center justify-center pointer-events-none ${className}`}
+      className={`fixed inset-0 flex items-center justify-center overflow-y-auto pointer-events-none px-3 py-6 sm:px-6 sm:py-10 ${className}`}
     >
       <div
-        className={`pointer-events-auto relative flex flex-col overflow-hidden rounded-[12px] border border-white/[0.08] bg-[#1e1e1e] shadow-[0_30px_80px_rgba(0,0,0,0.55),0_10px_30px_rgba(0,0,0,0.4)] ${windowMotionClass}`}
+        className={`pointer-events-auto relative flex max-h-full w-full flex-col overflow-hidden rounded-[12px] border border-white/[0.08] bg-[#1e1e1e] shadow-[0_30px_80px_rgba(0,0,0,0.55),0_10px_30px_rgba(0,0,0,0.4)] ${windowMotionClass}`}
       >
         <div className="relative flex h-[40px] shrink-0 items-center border-b border-white/[0.08] bg-[#2a2a2a] px-3">
           <div className="flex items-center gap-2">

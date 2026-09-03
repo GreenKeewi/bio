@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import MacWindow from "./components/MacWindow";
 
-type Link = { label: string; href: string; icon?: "email" | "github" };
+type Link = { label: string; href: string; icon?: "email" | "github" | "x" };
 
 type Project = {
   name: string;
@@ -20,6 +20,7 @@ const BIO =
 const LINKS: Link[] = [
   { label: "Email", href: "mailto:harshithseeta@gmail.com", icon: "email" },
   { label: "GitHub", href: "https://github.com/GreenKeewi", icon: "github" },
+  { label: "X", href: "https://x.com/dndharsh0", icon: "x" },
 ];
 
 const PROJECTS: Project[] = [
@@ -73,9 +74,16 @@ function LinkIcon({ icon }: { icon: NonNullable<Link["icon"]> }) {
       </svg>
     );
   }
+  if (icon === "github") {
+    return (
+      <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor">
+        <path d="M12 .5C5.73.5.98 5.24.98 11.52c0 5.02 3.26 9.28 7.79 10.79.57.1.78-.25.78-.55 0-.27-.01-1.16-.02-2.1-3.17.69-3.84-1.35-3.84-1.35-.52-1.32-1.27-1.67-1.27-1.67-1.04-.71.08-.7.08-.7 1.15.08 1.75 1.18 1.75 1.18 1.02 1.75 2.68 1.24 3.33.95.1-.74.4-1.24.72-1.53-2.53-.29-5.2-1.27-5.2-5.63 0-1.24.44-2.26 1.17-3.06-.12-.29-.51-1.45.11-3.02 0 0 .96-.31 3.14 1.17.91-.25 1.89-.38 2.86-.38.97 0 1.95.13 2.86.38 2.18-1.48 3.14-1.17 3.14-1.17.62 1.57.23 2.73.11 3.02.73.8 1.17 1.82 1.17 3.06 0 4.37-2.68 5.34-5.22 5.62.41.36.77 1.06.77 2.14 0 1.55-.01 2.79-.01 3.17 0 .3.2.66.79.55A11.03 11.03 0 0 0 23 11.52C23 5.24 18.27.5 12 .5Z" />
+      </svg>
+    );
+  }
   return (
-    <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor">
-      <path d="M12 .5C5.73.5.98 5.24.98 11.52c0 5.02 3.26 9.28 7.79 10.79.57.1.78-.25.78-.55 0-.27-.01-1.16-.02-2.1-3.17.69-3.84-1.35-3.84-1.35-.52-1.32-1.27-1.67-1.27-1.67-1.04-.71.08-.7.08-.7 1.15.08 1.75 1.18 1.75 1.18 1.02 1.75 2.68 1.24 3.33.95.1-.74.4-1.24.72-1.53-2.53-.29-5.2-1.27-5.2-5.63 0-1.24.44-2.26 1.17-3.06-.12-.29-.51-1.45.11-3.02 0 0 .96-.31 3.14 1.17.91-.25 1.89-.38 2.86-.38.97 0 1.95.13 2.86.38 2.18-1.48 3.14-1.17 3.14-1.17.62 1.57.23 2.73.11 3.02.73.8 1.17 1.82 1.17 3.06 0 4.37-2.68 5.34-5.22 5.62.41.36.77 1.06.77 2.14 0 1.55-.01 2.79-.01 3.17 0 .3.2.66.79.55A11.03 11.03 0 0 0 23 11.52C23 5.24 18.27.5 12 .5Z" />
+    <svg viewBox="0 0 24 24" width="11" height="11" fill="currentColor">
+      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
     </svg>
   );
 }
@@ -222,7 +230,7 @@ export default function Home() {
   }, []);
 
   return (
-    <MacWindow title="harsh.notes">
+    <MacWindow title="harsh.notes" className="[&>div]:max-w-2xl">
       <div className={`t-fade ${shown ? "is-shown" : ""} px-5 py-6 sm:px-8 sm:py-8`}>
         <header className="border-b border-[var(--line)] pb-6">
           <h1 className="font-[family-name:var(--font-serif)] italic text-2xl leading-none tracking-tight text-[var(--ink)] sm:text-3xl">
