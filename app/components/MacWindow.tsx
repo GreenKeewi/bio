@@ -12,7 +12,7 @@ interface MacWindowProps {
 }
 
 export default function MacWindow({
-  title = "harshith.txt — probably shipping something",
+  title = "harsh.txt — probably shipping something",
   children,
   className = "",
   bodyClassName = "",

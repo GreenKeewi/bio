@@ -12,7 +12,7 @@ type Project = {
   links: Link[];
 };
 
-const NAME = "Harshith Seeta";
+const NAME = "harsh";
 const ROLE = "Software Engineer";
 const BIO =
   "Been breaking and un-breaking computers since I was nine — turns out that's a personality trait now, not a phase. Folia, Solin, and Fable are the evidence.";
@@ -222,7 +222,7 @@ export default function Home() {
   }, []);
 
   return (
-    <MacWindow title="harshith.notes">
+    <MacWindow title="harsh.notes">
       <div className={`t-fade ${shown ? "is-shown" : ""} px-5 py-6 sm:px-8 sm:py-8`}>
         <header className="border-b border-[var(--line)] pb-6">
           <h1 className="font-[family-name:var(--font-serif)] italic text-2xl leading-none tracking-tight text-[var(--ink)] sm:text-3xl">

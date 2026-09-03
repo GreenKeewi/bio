@@ -16,7 +16,7 @@ const playfair = Playfair_Display({
   style: ["normal", "italic"],
 });
 
-const NAME = "Harshith Seeta";
+const NAME = "harsh";
 
 export const metadata: Metadata = {
   title: NAME,
