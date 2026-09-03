@@ -20,7 +20,6 @@ export default function MenuBar() {
   const [openMenu, setOpenMenu] = useState<string | null>(null);
 
   useEffect(() => {
-    setNow(new Date());
     const id = window.setInterval(() => setNow(new Date()), 1000);
     return () => window.clearInterval(id);
   }, []);
