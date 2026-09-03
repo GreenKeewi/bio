@@ -1,12 +1,12 @@
 @import "tailwindcss";
 
 :root {
-  --bg-base: #f1f1ef;
-  --bg-base-2: #e6e6e3;
-  --plate: #fbfbfa;
-  --ink: #232221;
-  --ink-soft: #6f6d69;
-  --line: rgba(35, 34, 33, 0.12);
+  --bg-base: #1c1c1e;
+  --bg-base-2: #151517;
+  --plate: #232326;
+  --ink: #ededec;
+  --ink-soft: #96958f;
+  --line: rgba(237, 237, 236, 0.1);
 }
 
 @theme inline {
@@ -19,22 +19,10 @@ body {
   height: 100%;
 }
 
-/* only lock scroll on the desktop mind-map breakpoint; mobile's stacked
-   layout is allowed to scroll naturally since it can exceed one screen */
-@media (min-width: 640px) {
-  html,
-  body {
-    overflow: hidden;
-  }
-}
-
 body {
   color: var(--ink);
   font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
   background-color: var(--bg-base);
-  background-image:
-    radial-gradient(circle at 15% 15%, var(--bg-base-2), transparent 55%),
-    radial-gradient(circle at 85% 80%, var(--bg-base-2), transparent 50%);
   position: relative;
 }
 
@@ -64,8 +52,8 @@ body {
   --tilt-glare-ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* entrance: fade + rise + blur-in, staggered per node index via inline delay */
-.t-node {
+/* entrance: fade + rise + blur-in for the window's document content */
+.t-fade {
   opacity: 0;
   transform: translateY(var(--stagger-distance));
   filter: blur(var(--stagger-blur));
@@ -75,47 +63,15 @@ body {
     filter var(--stagger-dur) var(--stagger-ease);
   will-change: transform, opacity, filter;
 }
-.is-shown .t-node {
+.t-fade.is-shown {
   opacity: 1;
   transform: translateY(0);
   filter: blur(0);
 }
 
-/* squiggle line draw-in, uses pathLength=1 so dash math is size-independent */
-.t-squiggle {
-  stroke-dasharray: 1;
-  stroke-dashoffset: 1;
-  opacity: 0;
-  transition:
-    stroke-dashoffset 900ms var(--ease-smooth-out),
-    opacity 500ms var(--ease-smooth-out);
-}
-.is-shown .t-squiggle {
-  stroke-dashoffset: 0;
-  opacity: 1;
-}
-
-/* pulsating flow overlay: short dashes travel center -> node on a loop,
-   layered on top of the solid squiggle once it has finished drawing in */
-.t-squiggle-flow {
-  stroke-dasharray: 0.05 0.19;
-  stroke-dashoffset: 0;
-  opacity: 0;
-  transition: opacity 400ms var(--ease-smooth-out);
-}
-.is-shown .t-squiggle-flow {
-  opacity: 0.85;
-  animation: squiggle-flow 1.6s linear infinite;
-}
-@keyframes squiggle-flow {
-  to {
-    stroke-dashoffset: -1.2;
-  }
-}
-
 /* link pill hover lift */
 .t-pill {
-  box-shadow: 0 2px 8px rgba(35, 34, 33, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
   transition:
     transform var(--duration-fast) var(--ease-bounce-strong),
     border-color var(--duration-fast) var(--ease-smooth-out),
@@ -125,7 +81,7 @@ body {
 }
 .t-pill:hover {
   transform: translateY(-2px) scale(1.04);
-  box-shadow: 0 6px 16px rgba(35, 34, 33, 0.16);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
 }
 
 /* card hover tilt */
@@ -210,14 +166,6 @@ body {
   .t-shimmer::before {
     animation: none !important;
   }
-}
-
-/* subtle lift for the un-boxed center text so it stays legible over the
-   grain and the squiggle lines without needing a solid card behind it */
-.t-center-shadow {
-  text-shadow:
-    0 1px 3px rgba(250, 246, 238, 0.9),
-    0 0 14px rgba(250, 246, 238, 0.85);
 }
 
 /* crop-mark corner frame: L-bracket sits just outside the box corner,
@@ -306,38 +254,68 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .t-node,
-  .t-squiggle,
-  .t-squiggle-flow,
+  .t-fade,
   .t-pill,
   .t-tilt-card {
     transition: none !important;
     animation: none !important;
   }
-  .t-node {
+  .t-fade {
     opacity: 1 !important;
     transform: none !important;
     filter: none !important;
-  }
-  .t-squiggle {
-    stroke-dashoffset: 0 !important;
-    opacity: 1 !important;
-  }
-  .t-squiggle-flow {
-    opacity: 0 !important;
   }
   .t-tilt-card {
     transform: none !important;
   }
 }
 
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  opacity: 0.14;
-  mix-blend-mode: multiply;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.5 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
-  z-index: 1;
+/* ── macOS window chrome (MacWindow / MenuBar) ── */
+@keyframes mac-shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-6px) rotate(-1deg); }
+  40% { transform: translateX(5px) rotate(1deg); }
+  60% { transform: translateX(-4px) rotate(-0.5deg); }
+  80% { transform: translateX(3px) rotate(0.5deg); }
+}
+
+@keyframes mac-minimize {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(0.85); }
+}
+
+@keyframes mac-zoom {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+@keyframes mac-tooltip {
+  0% { opacity: 0; transform: translateY(-4px); }
+  12%, 80% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(-2px); }
+}
+
+@keyframes mac-dropdown {
+  0% { opacity: 0; transform: translateY(-4px) scale(0.98); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.animate-mac-shake {
+  animation: mac-shake 0.5s ease-in-out;
+}
+
+.animate-mac-minimize {
+  animation: mac-minimize 0.4s ease-in-out;
+}
+
+.animate-mac-zoom {
+  animation: mac-zoom 0.4s ease-in-out;
+}
+
+.animate-mac-tooltip {
+  animation: mac-tooltip 1.2s ease-in-out forwards;
+}
+
+.animate-mac-dropdown {
+  animation: mac-dropdown 0.12s ease-out;
 }
