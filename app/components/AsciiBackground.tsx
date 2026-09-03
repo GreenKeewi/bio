@@ -101,7 +101,7 @@ export default function AsciiBackground({ className }: AsciiBackgroundProps) {
     let rows = 0;
     let animationFrameId = 0;
     let lastFrameTime = 0;
-    let startTime = performance.now();
+    const startTime = performance.now();
     let cancelled = false;
 
     function resize() {

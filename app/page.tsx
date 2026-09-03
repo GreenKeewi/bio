@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import NextLink from "next/link";
 import MacWindow from "./components/MacWindow";
 
-type Link = { label: string; href: string; icon?: "email" | "github" | "x" };
+type Link = { label: string; href: string; icon?: "email" | "github" | "devpost" | "x"; onClick?: () => void };
 
 type Project = {
   name: string;
@@ -21,8 +21,9 @@ const BIO =
   "Been breaking and un-breaking computers since I was nine — turns out that's a personality trait now, not a phase. Folia, Solin, and Fable are the evidence.";
 
 const LINKS: Link[] = [
-  { label: "Email", href: "mailto:harshithseeta@gmail.com", icon: "email" },
-  { label: "GitHub", href: "https://github.com/GreenKeewi", icon: "github" },
+  { label: "Email", href: "#", icon: "email" },
+  { label: "GitHub", href: "https://github.com/greenkeewi", icon: "github" },
+  { label: "Devpost", href: "https://devpost.com/GreenKeewi", icon: "devpost" },
   { label: "X", href: "https://x.com/dndharsh0", icon: "x" },
 ];
 
@@ -113,6 +114,13 @@ function LinkIcon({ icon }: { icon: NonNullable<Link["icon"]> }) {
       </svg>
     );
   }
+  if (icon === "devpost") {
+    return (
+      <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor">
+        <path d="M6.002 1.61 0 12l6.002 10.39h11.996L24 12 17.998 1.61H6.002zm1.593 4.083h4.705c3.21 0 5.42 2.03 5.42 6.307 0 4.29-2.21 6.32-5.42 6.32H7.595V5.693zm3.25 3.155v6.304h1.455c1.47 0 2.29-.988 2.29-3.15 0-2.17-.82-3.154-2.29-3.154h-1.455z" />
+      </svg>
+    );
+  }
   return (
     <svg viewBox="0 0 24 24" width="11" height="11" fill="currentColor">
       <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
@@ -120,7 +128,20 @@ function LinkIcon({ icon }: { icon: NonNullable<Link["icon"]> }) {
   );
 }
 
-function Pill({ label, href, icon }: Link) {
+function Pill({ label, href, icon, onClick }: Link) {
+  if (onClick) {
+    return (
+      <button
+        type="button"
+        onClick={onClick}
+        className="t-pill relative z-10 inline-flex items-center gap-1.5 rounded-full border border-[var(--line)] bg-[var(--plate)] px-3 py-1.5 text-[11px] tracking-wide text-[var(--ink-soft)] hover:border-[var(--ink)]/40 hover:text-[var(--ink)] cursor-pointer"
+      >
+        {icon && <LinkIcon icon={icon} />}
+        {label}
+      </button>
+    );
+  }
+
   const isMailto = href.startsWith("mailto:");
   return (
     <a
@@ -358,36 +379,59 @@ function MinorProjects() {
 
 export default function Home() {
   const [shown, setShown] = useState(false);
+  const [showEmailModal, setShowEmailModal] = useState(false);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     const t = setTimeout(() => setShown(true), 60);
     return () => clearTimeout(t);
   }, []);
 
-  return (
-    <MacWindow title="harsh.notes" className="[&>div]:max-w-2xl">
-      <div className={`t-fade ${shown ? "is-shown" : ""} px-5 py-6 sm:px-8 sm:py-8`}>
-        <header className="border-b border-[var(--line)] pb-6">
-          <h1 className="font-[family-name:var(--font-serif)] italic text-2xl leading-none tracking-tight text-[var(--ink)] sm:text-3xl">
-            {NAME}
-          </h1>
-          <p className="mt-1.5 text-[10px] uppercase tracking-[0.2em] text-[var(--ink-soft)]">{ROLE}</p>
-          <p className="mt-3 max-w-md text-[13px] leading-relaxed text-[var(--ink)]">
-            <BioText text={BIO} />
-          </p>
+  const handleEmailClick = () => {
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+    }
+    setShowEmailModal(true);
+    timerRef.current = setTimeout(() => {
+      setShowEmailModal(false);
+    }, 10000);
+  };
 
-          <div className="mt-4 flex flex-wrap items-center gap-1.5">
-            {LINKS.map((l) => (
-              <Pill key={l.label} {...l} />
-            ))}
-            <NextLink
-              href="/blog"
-              className="t-pill relative z-10 inline-flex items-center gap-1.5 rounded-full border border-[var(--line)] bg-[var(--plate)] px-3 py-1.5 text-[11px] tracking-wide text-[var(--ink-soft)] hover:border-[var(--ink)]/40 hover:text-[var(--ink)]"
-            >
-              Blog
-            </NextLink>
-          </div>
-        </header>
+  useEffect(() => {
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+    };
+  }, []);
+
+  return (
+    <>
+      <MacWindow title="harsh.notes" className="[&>div]:max-w-2xl">
+        <div className={`t-fade ${shown ? "is-shown" : ""} px-5 py-6 sm:px-8 sm:py-8`}>
+          <header className="border-b border-[var(--line)] pb-6">
+            <h1 className="font-[family-name:var(--font-serif)] italic text-2xl leading-none tracking-tight text-[var(--ink)] sm:text-3xl">
+              {NAME}
+            </h1>
+            <p className="mt-1.5 text-[10px] uppercase tracking-[0.2em] text-[var(--ink-soft)]">{ROLE}</p>
+            <p className="mt-3 max-w-md text-[13px] leading-relaxed text-[var(--ink)]">
+              <BioText text={BIO} />
+            </p>
+
+            <div className="mt-4 flex flex-wrap items-center gap-1.5">
+              {LINKS.map((l) => (
+                <Pill
+                  key={l.label}
+                  {...l}
+                  {...(l.icon === "email" ? { onClick: handleEmailClick } : {})}
+                />
+              ))}
+              <NextLink
+                href="/blog"
+                className="t-pill relative z-10 inline-flex items-center gap-1.5 rounded-full border border-[var(--line)] bg-[var(--plate)] px-3 py-1.5 text-[11px] tracking-wide text-[var(--ink-soft)] hover:border-[var(--ink)]/40 hover:text-[var(--ink)]"
+              >
+                Blog
+              </NextLink>
+            </div>
+          </header>
 
         <div className="pt-2">
           {PROJECTS.map((p) => (
@@ -402,5 +446,24 @@ export default function Home() {
         </p>
       </div>
     </MacWindow>
+
+    {showEmailModal && (
+      <div
+        role="dialog"
+        aria-label="Email Address"
+        className="fixed bottom-4 left-4 z-50 flex items-center gap-3 rounded-lg border border-[var(--line)] bg-[#1c1c1c]/90 px-4 py-3 text-xs text-[var(--ink)] shadow-[0_10px_30px_rgba(0,0,0,0.5)] backdrop-blur-md animate-mac-dropdown"
+      >
+        <span className="font-mono selection:bg-white/20">harshithseeta at gmail dot com</span>
+        <button
+          type="button"
+          onClick={() => setShowEmailModal(false)}
+          className="ml-1 text-[var(--ink-soft)] hover:text-[var(--ink)] text-sm leading-none"
+          aria-label="Close modal"
+        >
+          ×
+        </button>
+      </div>
+    )}
+  </>
   );
 }
