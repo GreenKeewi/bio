@@ -26,6 +26,33 @@ body {
   position: relative;
 }
 
+/* ── custom scrollbar: thin, low-contrast, blends into dark chrome ── */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(237, 237, 236, 0.18) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: rgba(237, 237, 236, 0.14);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(237, 237, 236, 0.28);
+  background-clip: padding-box;
+}
+
 /* ── motion tokens (transitions-dev) ── */
 :root {
   --duration-stagger: 40ms;
