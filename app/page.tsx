@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import NextLink from "next/link";
 import MacWindow from "./components/MacWindow";
 
 type Link = { label: string; href: string; icon?: "email" | "github" | "x" };
@@ -44,6 +45,34 @@ const PROJECTS: Project[] = [
     tagline: "A story with an actual ending, unlike most of my side projects.",
     url: "https://usefable.ca",
     links: [{ label: "Site", href: "https://usefable.ca" }],
+  },
+];
+
+type MinorProject = {
+  name: string;
+  url: string;
+  blurb: string;
+  why: string;
+};
+
+const MINOR_PROJECTS: MinorProject[] = [
+  {
+    name: "Solin (archived)",
+    url: "https://solin-archived.vercel.app",
+    blurb: "An earlier build of Solin, kept around as a museum piece.",
+    why: "Shelved once the current version outgrew it, but it taught me most of what made the rebuild worth doing.",
+  },
+  {
+    name: "Feedora",
+    url: "https://feedora-simple-feedback-for-simple.vercel.app",
+    blurb: "Simple feedback widget for people who don't want a whole platform.",
+    why: "Wanted a way to collect thoughts from users without dragging in a survey tool built for enterprises.",
+  },
+  {
+    name: "Arc UI",
+    url: "https://arc-ui.vercel.app",
+    blurb: "A small component set for interfaces that lean more curve than corner.",
+    why: "Kept rebuilding the same rounded button and card everywhere, so I gave the habit a home.",
   },
 ];
 
@@ -244,6 +273,89 @@ function ProjectEntry({ project }: { project: Project }) {
   );
 }
 
+function MinorPreview({ project }: { project: MinorProject }) {
+  return (
+    <div className="flex h-full flex-col gap-3">
+      <div className="relative aspect-[16/10] w-full overflow-hidden rounded-md border border-[var(--line)] bg-[var(--plate)]">
+        <ScaledPreview url={project.url} />
+      </div>
+      <div>
+        <p className="text-[12px] font-medium text-[var(--ink)]">{project.name}</p>
+        <p className="mt-1 text-[11.5px] leading-relaxed text-[var(--ink-soft)]">{project.blurb}</p>
+        <p className="mt-1.5 text-[11px] leading-relaxed text-[var(--ink-soft)]/70">{project.why}</p>
+      </div>
+    </div>
+  );
+}
+
+function MinorProjects() {
+  const [active, setActive] = useState(MINOR_PROJECTS[0].name);
+  const [openMobile, setOpenMobile] = useState<string | null>(null);
+  const activeProject = MINOR_PROJECTS.find((p) => p.name === active) ?? MINOR_PROJECTS[0];
+
+  return (
+    <div className="pt-6">
+      {/* desktop / tablet: hover-driven preview + list */}
+      <div className="hidden sm:flex sm:gap-6">
+        <div className="w-[58%] shrink-0 transition-opacity duration-300">
+          <MinorPreview project={activeProject} />
+        </div>
+        <div className="min-w-0 flex-1">
+          <p className="text-[10px] uppercase tracking-[0.2em] text-[var(--ink-soft)]/70">side quests</p>
+          <div className="mt-3 flex flex-col">
+            {MINOR_PROJECTS.map((p) => (
+              <button
+                key={p.name}
+                type="button"
+                onMouseEnter={() => setActive(p.name)}
+                onFocus={() => setActive(p.name)}
+                className={`rounded-sm px-2 py-1.5 text-left text-[12px] transition-colors duration-200 ${
+                  active === p.name
+                    ? "text-[var(--ink)]"
+                    : "text-[var(--ink-soft)] hover:text-[var(--ink)]"
+                }`}
+              >
+                {p.name}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* mobile: tap to expand */}
+      <div className="sm:hidden">
+        <p className="text-[10px] uppercase tracking-[0.2em] text-[var(--ink-soft)]/70">side quests</p>
+        <div className="mt-3 flex flex-col gap-1">
+          {MINOR_PROJECTS.map((p) => {
+            const isOpen = openMobile === p.name;
+            return (
+              <div key={p.name} className="border-b border-[var(--line)] last:border-b-0">
+                <button
+                  type="button"
+                  onClick={() => setOpenMobile(isOpen ? null : p.name)}
+                  className="flex w-full items-center justify-between py-2 text-left text-[12px] text-[var(--ink-soft)]"
+                >
+                  <span className={isOpen ? "text-[var(--ink)]" : ""}>{p.name}</span>
+                  <span className="text-[10px]">{isOpen ? "–" : "+"}</span>
+                </button>
+                <div
+                  className={`overflow-hidden transition-[max-height,opacity] duration-300 ${
+                    isOpen ? "max-h-[400px] opacity-100" : "max-h-0 opacity-0"
+                  }`}
+                >
+                  <div className="pb-4">
+                    <MinorPreview project={p} />
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function Home() {
   const [shown, setShown] = useState(false);
 
@@ -268,6 +380,12 @@ export default function Home() {
             {LINKS.map((l) => (
               <Pill key={l.label} {...l} />
             ))}
+            <NextLink
+              href="/blog"
+              className="t-pill relative z-10 inline-flex items-center gap-1.5 rounded-full border border-[var(--line)] bg-[var(--plate)] px-3 py-1.5 text-[11px] tracking-wide text-[var(--ink-soft)] hover:border-[var(--ink)]/40 hover:text-[var(--ink)]"
+            >
+              Blog
+            </NextLink>
           </div>
         </header>
 
@@ -276,6 +394,8 @@ export default function Home() {
             <ProjectEntry key={p.name} project={p} />
           ))}
         </div>
+
+        <MinorProjects />
 
         <p className="pt-6 text-[10px] tracking-wide text-[var(--ink-soft)]">
           © {new Date().getFullYear()} {NAME} — built, mostly on purpose.
