@@ -10,6 +10,8 @@ type Project = {
   tagline: string;
   url: string;
   links: Link[];
+  /** false when the site blocks iframe embedding (X-Frame-Options/CSP) */
+  preview?: boolean;
 };
 
 const NAME = "harsh";
@@ -34,6 +36,7 @@ const PROJECTS: Project[] = [
     name: "Solin",
     tagline: "Quietly solving a problem you didn't know you'd stopped noticing.",
     url: "https://heysolin.com",
+    preview: false,
     links: [{ label: "Site", href: "https://heysolin.com" }],
   },
   {
@@ -145,6 +148,22 @@ function ScaledPreview({ url }: { url: string }) {
   );
 }
 
+// fallback for sites that refuse to be framed (X-Frame-Options/CSP) —
+// a styled monogram card instead of a permanently blank iframe
+function NoPreview({ name }: { name: string }) {
+  return (
+    <div className="absolute inset-0 flex items-center justify-center overflow-hidden bg-gradient-to-br from-[var(--plate)] to-black/60">
+      <span
+        className="font-[family-name:var(--font-serif)] italic text-4xl text-[var(--ink)]/25 select-none"
+        aria-hidden
+      >
+        {name[0]}
+      </span>
+      <div className="t-tilt-glare" />
+    </div>
+  );
+}
+
 function TiltCard({ project }: { project: Project }) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
@@ -189,7 +208,11 @@ function TiltCard({ project }: { project: Project }) {
         className="t-tilt-card overflow-hidden rounded-md border border-[var(--line)] bg-[var(--plate)] shadow-[0_3px_16px_rgba(0,0,0,0.35)]"
       >
         <div className="relative aspect-[16/10] w-full overflow-visible">
-          <ScaledPreview url={project.url} />
+          {project.preview === false ? (
+            <NoPreview name={project.name} />
+          ) : (
+            <ScaledPreview url={project.url} />
+          )}
           <span className="t-frame-corner t-frame-corner--tl" />
           <span className="t-frame-corner t-frame-corner--tr" />
           <span className="t-frame-corner t-frame-corner--bl" />
