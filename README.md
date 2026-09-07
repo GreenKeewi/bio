@@ -1,36 +1,48 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# harsh.bio
 
-## Getting Started
+Personal landing page and portfolio, built with Next.js (App Router) and Tailwind CSS v4. A single-page "desktop" style UI with a small MDX-powered blog.
 
-First, run the development server:
+## Features
+
+- Bio + social links, with live scaled-iframe previews of featured projects (falls back gracefully for sites that block embedding)
+- "Side quests" list of smaller/archived projects
+- Blog at `/blog`, written in MDX with GitHub-flavored markdown, LaTeX (via `remark-math`/`rehype-katex`), and Mermaid diagram support
+- Custom "Mac window" chrome, ASCII background, and a menu bar shared across pages
+
+## Getting started
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Other scripts:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build   # production build
+npm run start   # serve the production build
+npm run lint    # eslint
+```
 
-## Learn More
+## Project structure
 
-To learn more about Next.js, take a look at the following resources:
+```
+app/
+  page.tsx           # landing page (bio, project cards, links — edit the data arrays here)
+  layout.tsx          # root layout, fonts, global chrome
+  components/         # MacWindow, AsciiBackground, MenuBar, FadeIn, Mermaid, MdxCodeBlock
+  blog/
+    page.tsx          # blog index
+    [slug]/page.tsx   # individual post route
+    lib.ts            # reads/parses posts from content/blog
+content/
+  blog/*.mdx           # blog post source files
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+To add or edit a project, social link, or "side quest," edit the `PROJECTS` / `LINKS` / `MINOR_PROJECTS` arrays at the top of `app/page.tsx`. To add a blog post, drop a new `.mdx` file into `content/blog/` with the same frontmatter shape as the existing posts.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Deployment
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Deployed on [Vercel](https://vercel.com); pushing to the main branch triggers a deploy.
