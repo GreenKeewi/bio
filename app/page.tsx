@@ -13,6 +13,8 @@ type Project = {
   links: Link[];
   /** false when the site blocks iframe embedding (X-Frame-Options/CSP) */
   preview?: boolean;
+  /** "phone" renders the card as a mobile viewport in a phone-shaped frame; defaults to "desktop" */
+  viewport?: "desktop" | "phone";
 };
 
 const NAME = "harsh";
@@ -39,6 +41,7 @@ const PROJECTS: Project[] = [
     tagline: "Quietly solving a problem you didn't know you'd stopped noticing.",
     url: "https://heysolin.com",
     preview: false,
+    viewport: "phone",
     links: [{ label: "Site", href: "https://heysolin.com" }],
   },
   {
@@ -155,26 +158,30 @@ function Pill({ label, href, icon, onClick }: Link) {
   );
 }
 
-// virtual desktop viewport the site is rendered at, then scaled down to
-// exactly fill the preview box — so the whole page layout is visible
-// (not just a cropped top-left corner at near-1:1 zoom)
-const PREVIEW_VW = 1440;
-const PREVIEW_VH = 900;
+// virtual viewport the site is rendered at, then scaled down to exactly
+// fill the preview box — so the whole page layout is visible (not just a
+// cropped top-left corner at near-1:1 zoom). "phone" mimics a mobile
+// screen so mobile-first products don't get squeezed into a desktop layout.
+const PREVIEW_VIEWPORTS = {
+  desktop: { vw: 1440, vh: 900 },
+  phone: { vw: 390, vh: 844 },
+} as const;
 
-function ScaledPreview({ url }: { url: string }) {
+function ScaledPreview({ url, viewport = "desktop" }: { url: string; viewport?: "desktop" | "phone" }) {
   const boxRef = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(0);
+  const { vw, vh } = PREVIEW_VIEWPORTS[viewport];
 
   useEffect(() => {
     const box = boxRef.current;
     if (!box) return;
     const ro = new ResizeObserver((entries) => {
       const w = entries[0]?.contentRect.width;
-      if (w) setScale(w / PREVIEW_VW);
+      if (w) setScale(w / vw);
     });
     ro.observe(box);
     return () => ro.disconnect();
-  }, []);
+  }, [vw]);
 
   return (
     <div ref={boxRef} className="absolute inset-0 overflow-hidden bg-black/40">
@@ -186,8 +193,8 @@ function ScaledPreview({ url }: { url: string }) {
           tabIndex={-1}
           className="pointer-events-none absolute top-0 left-0 origin-top-left"
           style={{
-            width: `${PREVIEW_VW}px`,
-            height: `${PREVIEW_VH}px`,
+            width: `${vw}px`,
+            height: `${vh}px`,
             transform: `scale(${scale})`,
             border: "none",
           }}
@@ -251,17 +258,35 @@ function TiltCard({ project }: { project: Project }) {
     };
   }, []);
 
+  const isPhone = project.viewport === "phone";
+
   return (
-    <div ref={wrapRef} className="t-tilt w-full sm:w-[220px] sm:shrink-0">
+    <div
+      ref={wrapRef}
+      className={isPhone ? "t-tilt w-[132px] shrink-0 self-center sm:self-auto" : "t-tilt w-full sm:w-[220px] sm:shrink-0"}
+    >
       <div
         ref={cardRef}
-        className="t-tilt-card overflow-hidden rounded-md border border-[var(--line)] bg-[var(--plate)] shadow-[0_3px_16px_rgba(0,0,0,0.35)]"
+        className={
+          isPhone
+            ? "t-tilt-card overflow-hidden rounded-[22px] border-[3px] border-[var(--line)] bg-[var(--plate)] p-1 shadow-[0_3px_16px_rgba(0,0,0,0.35)]"
+            : "t-tilt-card overflow-hidden rounded-md border border-[var(--line)] bg-[var(--plate)] shadow-[0_3px_16px_rgba(0,0,0,0.35)]"
+        }
       >
-        <div className="relative aspect-[16/10] w-full overflow-visible">
+        <div
+          className={
+            isPhone
+              ? "relative aspect-[9/19.5] w-full overflow-hidden rounded-[16px]"
+              : "relative aspect-[16/10] w-full overflow-visible"
+          }
+        >
+          {isPhone && (
+            <span className="absolute top-1.5 left-1/2 z-10 h-1 w-8 -translate-x-1/2 rounded-full bg-black/50" />
+          )}
           {project.preview === false ? (
             <NoPreview name={project.name} />
           ) : (
-            <ScaledPreview url={project.url} />
+            <ScaledPreview url={project.url} viewport={project.viewport} />
           )}
           <span className="t-frame-corner t-frame-corner--tl" />
           <span className="t-frame-corner t-frame-corner--tr" />
