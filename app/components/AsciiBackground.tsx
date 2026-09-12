@@ -1,11 +1,8 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const CHAR_RAMP = " .:-=+*#%@";
-const CELL_SIZE = 9;
-const TARGET_FPS = 28;
-const FRAME_INTERVAL = 1000 / TARGET_FPS;
 
 const BG_COLOR = "#0a0a0a";
 const FG_R = 150;
@@ -66,7 +63,7 @@ function fbm(x: number, y: number): number {
  * Brightness sampler for a single grid cell, in the range [0, 1].
  *
  * SWAP POINT: this is the only function that needs to change to drive the
- * effect from a video instead of noise — replace the fbm() call with a read
+ * effect from a video instead of noise: replace the fbm() call with a read
  * of the average luminance of the corresponding region of a <video> frame
  * drawn to an offscreen canvas (ctx.getImageData over the cell's pixel
  * bounds), keeping the same (col, row, time) -> [0,1] contract.
@@ -85,6 +82,7 @@ interface AsciiBackgroundProps {
 
 export default function AsciiBackground({ className }: AsciiBackgroundProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const [paused, setPaused] = useState(false);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -95,6 +93,9 @@ export default function AsciiBackground({ className }: AsciiBackgroundProps) {
     const reduceMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)"
     ).matches;
+    const lowPowerDevice = (navigator.hardwareConcurrency ?? 8) <= 4;
+    const cellSize = lowPowerDevice ? 15 : 12;
+    const frameInterval = 1000 / (lowPowerDevice ? 8 : 18);
 
     let dpr = Math.min(window.devicePixelRatio || 1, 2);
     let cols = 0;
@@ -114,9 +115,9 @@ export default function AsciiBackground({ className }: AsciiBackgroundProps) {
       canvas.style.width = `${width}px`;
       canvas.style.height = `${height}px`;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      cols = Math.ceil(width / CELL_SIZE) + 1;
-      rows = Math.ceil(height / CELL_SIZE) + 1;
-      ctx.font = `${CELL_SIZE}px monospace`;
+      cols = Math.ceil(width / cellSize) + 1;
+      rows = Math.ceil(height / cellSize) + 1;
+      ctx.font = `${cellSize}px monospace`;
       ctx.textBaseline = "top";
     }
 
@@ -140,7 +141,7 @@ export default function AsciiBackground({ className }: AsciiBackgroundProps) {
           if (char === " ") continue;
           const alpha = 0.15 + brightness * 0.5;
           ctx.fillStyle = `rgba(${FG_R}, ${FG_G}, ${FG_B}, ${alpha.toFixed(3)})`;
-          ctx.fillText(char, col * CELL_SIZE, row * CELL_SIZE);
+          ctx.fillText(char, col * cellSize, row * cellSize);
         }
       }
     }
@@ -148,7 +149,7 @@ export default function AsciiBackground({ className }: AsciiBackgroundProps) {
     function tick(now: number) {
       if (cancelled) return;
       animationFrameId = requestAnimationFrame(tick);
-      if (now - lastFrameTime < FRAME_INTERVAL) return;
+      if (now - lastFrameTime < frameInterval) return;
       lastFrameTime = now;
       const elapsedSeconds = (now - startTime) / 1000;
       drawFrame(elapsedSeconds);
@@ -156,7 +157,7 @@ export default function AsciiBackground({ className }: AsciiBackgroundProps) {
 
     resize();
 
-    if (reduceMotion) {
+    if (reduceMotion || paused) {
       drawFrame(0);
     } else {
       animationFrameId = requestAnimationFrame(tick);
@@ -164,19 +165,26 @@ export default function AsciiBackground({ className }: AsciiBackgroundProps) {
 
     function handleResize() {
       resize();
-      if (reduceMotion) {
+      if (reduceMotion || paused) {
         drawFrame(0);
       }
     }
 
     window.addEventListener("resize", handleResize);
 
+    function togglePaused() {
+      setPaused((current) => !current);
+    }
+
+    window.addEventListener("toggle-ascii-background", togglePaused);
+
     return () => {
       cancelled = true;
       window.removeEventListener("resize", handleResize);
+      window.removeEventListener("toggle-ascii-background", togglePaused);
       cancelAnimationFrame(animationFrameId);
     };
-  }, []);
+  }, [paused]);
 
   return (
     <canvas

@@ -10,6 +10,16 @@ export default function BlogIndex() {
     <MacWindow title="harsh.blog" className="[&>div]:max-w-2xl">
       <FadeIn className="px-5 py-6 sm:px-8 sm:py-8">
         <header className="border-b border-[var(--line)] pb-6">
+          <Link
+            href="/"
+            className="mb-5 inline-flex text-[11px] text-[var(--ink-soft)] transition-colors hover:text-[var(--ink)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--ink)]"
+          >
+            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+              <path d="m14 6-6 6 6 6" />
+              <path d="M8 12h11" />
+            </svg>
+            Back to home
+          </Link>
           <h1 className="font-[family-name:var(--font-serif)] italic text-2xl leading-none tracking-tight text-[var(--ink)] sm:text-3xl">
             Blog
           </h1>

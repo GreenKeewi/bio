@@ -20,11 +20,11 @@ type Project = {
 const NAME = "harsh";
 const ROLE = "Software Engineer";
 const BIO =
-  "Been breaking and un-breaking computers since I was nine — turns out that's a personality trait now, not a phase. Folia, Solin, and Fable are the evidence.";
+  "Been breaking and un-breaking computers since I was nine. Turns out that's a personality trait now, not a phase. Folia, Solin, and Fable are the evidence.";
 
 const LINKS: Link[] = [
-  { label: "Email", href: "#", icon: "email" },
-  { label: "GitHub", href: "https://github.com/greenkeewi", icon: "github" },
+  { label: "Email", href: "mailto:harshithseeta@gmail.com", icon: "email" },
+  { label: "GitHub", href: "https://github.com/GreenKeewi", icon: "github" },
   { label: "Devpost", href: "https://devpost.com/GreenKeewi", icon: "devpost" },
   { label: "X", href: "https://x.com/dndharsh0", icon: "x" },
 ];
@@ -32,13 +32,13 @@ const LINKS: Link[] = [
 const PROJECTS: Project[] = [
   {
     name: "Folia",
-    tagline: "Leafing through ideas so you don't have to. Pun fully intended.",
+    tagline: "Turns spoken meetings and lectures into structured notes with math, diagrams, and to-dos.",
     url: "https://folia-thodore.iso-nord.ca",
     links: [{ label: "Site", href: "https://folia-thodore.iso-nord.ca" }],
   },
   {
     name: "Solin",
-    tagline: "Quietly solving a problem you didn't know you'd stopped noticing.",
+    tagline: "Daily public-speaking practice with AI feedback on filler words, pacing, confidence, and structure.",
     url: "https://heysolin.com",
     preview: false,
     viewport: "phone",
@@ -46,7 +46,7 @@ const PROJECTS: Project[] = [
   },
   {
     name: "Fable",
-    tagline: "A story with an actual ending, unlike most of my side projects.",
+    tagline: "An AI consulting agency for strategy, automation, and intelligent systems in fast-moving businesses.",
     url: "https://usefable.ca",
     links: [{ label: "Site", href: "https://usefable.ca" }],
   },
@@ -59,12 +59,32 @@ type MinorProject = {
   why: string;
 };
 
+type Experience = {
+  company: string;
+  role: string;
+  url: string;
+  logo: string;
+  description: string;
+  current?: boolean;
+};
+
+const EXPERIENCE: Experience[] = [
+  {
+    company: "Dreamwork",
+    role: "GTM Engineer Intern",
+    url: "https://www.dreamworkhq.com",
+    logo: "https://www.dreamworkhq.com/favicon.ico",
+    description: "Currently building tools that help people spend less time applying and more time interviewing.",
+    current: true,
+  },
+];
+
 const MINOR_PROJECTS: MinorProject[] = [
   {
     name: "Solin (archived)",
     url: "https://solin-archived.vercel.app",
-    blurb: "An earlier build of Solin, kept around as a museum piece.",
-    why: "Shelved once the current version outgrew it, but it taught me most of what made the rebuild worth doing.",
+    blurb: "A personal AI assistant that learns what matters over time and acts across connected tools.",
+    why: "It connected services like Gmail, Calendar, Slack, texts, and tasks into one personal operating layer.",
   },
   {
     name: "Feedora",
@@ -75,8 +95,8 @@ const MINOR_PROJECTS: MinorProject[] = [
   {
     name: "Arc UI",
     url: "https://arc-ui.vercel.app",
-    blurb: "A small component set for interfaces that lean more curve than corner.",
-    why: "Kept rebuilding the same rounded button and card everywhere, so I gave the habit a home.",
+    blurb: "A professional website service with a one-time setup and a monthly maintenance plan.",
+    why: "Built to give businesses a straightforward path to a polished web presence without an agency-sized commitment.",
   },
 ];
 
@@ -205,7 +225,7 @@ function ScaledPreview({ url, viewport = "desktop" }: { url: string; viewport?: 
   );
 }
 
-// fallback for sites that refuse to be framed (X-Frame-Options/CSP) —
+// fallback for sites that refuse to be framed (X-Frame-Options/CSP):
 // a styled monogram card instead of a permanently blank iframe
 function NoPreview({ name }: { name: string }) {
   return (
@@ -218,6 +238,37 @@ function NoPreview({ name }: { name: string }) {
       </span>
       <div className="t-tilt-glare" />
     </div>
+  );
+}
+
+function DeferredPreview({ name, url, viewport }: { name: string; url: string; viewport?: "desktop" | "phone" }) {
+  const [inViewport, setInViewport] = useState(false);
+  const [pageVisible, setPageVisible] = useState(true);
+  const viewportRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const target = viewportRef.current;
+    if (!target) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setInViewport(entry.isIntersecting),
+      { threshold: 0.95 }
+    );
+    observer.observe(target);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const handleVisibilityChange = () => setPageVisible(!document.hidden);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    return () => document.removeEventListener("visibilitychange", handleVisibilityChange);
+  }, []);
+
+  return (
+    <>
+      <div ref={viewportRef} className="absolute inset-0" />
+      {inViewport && pageVisible ? <ScaledPreview url={url} viewport={viewport} /> : <NoPreview name={name} />}
+    </>
   );
 }
 
@@ -286,7 +337,7 @@ function TiltCard({ project }: { project: Project }) {
           {project.preview === false ? (
             <NoPreview name={project.name} />
           ) : (
-            <ScaledPreview url={project.url} viewport={project.viewport} />
+            <DeferredPreview name={project.name} url={project.url} viewport={project.viewport} />
           )}
           <span className="t-frame-corner t-frame-corner--tl" />
           <span className="t-frame-corner t-frame-corner--tr" />
@@ -319,11 +370,51 @@ function ProjectEntry({ project }: { project: Project }) {
   );
 }
 
+function ExperienceEntry({ experience }: { experience: Experience }) {
+  return (
+    <div className="flex flex-col gap-3 border-b border-[var(--line)] py-5 last:border-b-0 sm:flex-row sm:items-center sm:gap-5">
+      <div className="t-tilt w-full sm:w-[220px] sm:shrink-0">
+        <div className="t-tilt-card overflow-hidden rounded-md border border-[var(--line)] bg-[var(--plate)] shadow-[0_3px_16px_rgba(0,0,0,0.35)]">
+          <div className="relative aspect-[16/10] w-full overflow-visible">
+            <DeferredPreview name={experience.company} url={experience.url} />
+            <span className="t-frame-corner t-frame-corner--tl" />
+            <span className="t-frame-corner t-frame-corner--tr" />
+            <span className="t-frame-corner t-frame-corner--bl" />
+            <span className="t-frame-corner t-frame-corner--br" />
+          </div>
+        </div>
+      </div>
+      <div className="min-w-0 flex-1">
+        <div className="flex items-center justify-between gap-2">
+          <div className="flex min-w-0 items-center gap-2.5">
+            <span className="flex size-7 shrink-0 items-center justify-center overflow-hidden rounded-md border border-[var(--line)] bg-white p-1">
+              <img src={experience.logo} alt="" className="size-full object-contain" />
+            </span>
+            <div className="min-w-0">
+              <h3 className="t-shimmer cursor-default text-[15px] font-medium" data-text={experience.company}>
+                {experience.company}
+              </h3>
+              <p className="mt-0.5 text-[10px] text-[var(--ink-soft)]">{experience.role}</p>
+            </div>
+            {experience.current && (
+              <span className="rounded-full border border-[var(--line)] px-2 py-0.5 text-[9px] tracking-wide text-[var(--ink-soft)]">
+                now
+              </span>
+            )}
+          </div>
+          <Pill label="Visit" href={experience.url} />
+        </div>
+        <p className="mt-2 text-[12.5px] leading-relaxed text-[var(--ink-soft)]">{experience.description}</p>
+      </div>
+    </div>
+  );
+}
+
 function MinorPreview({ project }: { project: MinorProject }) {
   return (
     <div className="flex h-full flex-col gap-3">
       <div className="relative aspect-[16/10] w-full overflow-hidden rounded-md border border-[var(--line)] bg-[var(--plate)]">
-        <ScaledPreview url={project.url} />
+        <DeferredPreview name={project.name} url={project.url} />
       </div>
       <div>
         <p className="text-[12px] font-medium text-[var(--ink)]">{project.name}</p>
@@ -451,8 +542,12 @@ export default function Home() {
               ))}
               <NextLink
                 href="/blog"
-                className="t-pill relative z-10 inline-flex items-center gap-1.5 rounded-full border border-[var(--line)] bg-[var(--plate)] px-3 py-1.5 text-[11px] tracking-wide text-[var(--ink-soft)] hover:border-[var(--ink)]/40 hover:text-[var(--ink)]"
+                className="t-pill relative z-10 inline-flex items-center gap-1.5 rounded-full border border-[var(--ink)]/25 bg-white/[0.06] px-3 py-1.5 text-[11px] tracking-wide text-[var(--ink)] hover:border-[var(--ink)]/50"
               >
+                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+                  <path d="M5 4.75A2.75 2.75 0 0 1 7.75 2h9.5A1.75 1.75 0 0 1 19 3.75v16.5a1.75 1.75 0 0 0-1.75-1.75h-9.5A2.75 2.75 0 0 0 5 21.25V4.75Z" />
+                  <path d="M5 4.75v16.5" />
+                </svg>
                 Blog
               </NextLink>
             </div>
@@ -464,10 +559,21 @@ export default function Home() {
           ))}
         </div>
 
+        <section className="mt-2 border-t border-[var(--line)] pt-5" aria-labelledby="experience-heading">
+          <h2 id="experience-heading" className="text-[10px] tracking-[0.2em] text-[var(--ink-soft)]/70">
+            Professional experience
+          </h2>
+          <div className="mt-1">
+            {EXPERIENCE.map((experience) => (
+              <ExperienceEntry key={experience.company} experience={experience} />
+            ))}
+          </div>
+        </section>
+
         <MinorProjects />
 
         <p className="pt-6 text-[10px] tracking-wide text-[var(--ink-soft)]">
-          © {new Date().getFullYear()} {NAME} — built, mostly on purpose.
+          © {new Date().getFullYear()} {NAME}. Built, mostly on purpose.
         </p>
       </div>
     </MacWindow>

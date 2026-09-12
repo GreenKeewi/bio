@@ -12,7 +12,7 @@ interface MacWindowProps {
 }
 
 export default function MacWindow({
-  title = "harsh.txt — probably shipping something",
+  title = "harsh.txt: probably shipping something",
   children,
   className = "",
   bodyClassName = "",
@@ -86,6 +86,8 @@ export default function MacWindow({
         </div>
 
         <div
+          data-window-body
+          tabIndex={-1}
           className={`min-h-0 flex-1 overflow-auto ${bodyClassName}`}
         >
           {children}
