@@ -1,5 +1,4 @@
 import Link from "next/link";
-import MacWindow from "../components/MacWindow";
 import FadeIn from "../components/FadeIn";
 import { getAllPosts } from "./lib";
 
@@ -7,49 +6,30 @@ export default function BlogIndex() {
   const posts = getAllPosts();
 
   return (
-    <MacWindow title="harsh.blog" className="[&>div]:max-w-2xl">
-      <FadeIn className="px-5 py-6 sm:px-8 sm:py-8">
-        <header className="border-b border-[var(--line)] pb-6">
-          <Link
-            href="/"
-            className="mb-5 inline-flex text-[11px] text-[var(--ink-soft)] transition-colors hover:text-[var(--ink)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--ink)]"
-          >
-            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-              <path d="m14 6-6 6 6 6" />
-              <path d="M8 12h11" />
-            </svg>
-            Back to home
-          </Link>
-          <h1 className="font-[family-name:var(--font-serif)] italic text-2xl leading-none tracking-tight text-[var(--ink)] sm:text-3xl">
-            Blog
-          </h1>
-          <p className="mt-1.5 text-[10px] uppercase tracking-[0.2em] text-[var(--ink-soft)]">
-            Notes, mostly true
-          </p>
-        </header>
+    <main className="mx-auto flex min-h-full w-full max-w-[560px] flex-col px-5 py-16 sm:px-8">
+      <FadeIn>
+        <Link href="/" className="text-[13px] text-[var(--ink-soft)] transition-colors hover:text-[var(--ink)]">
+          ← harsh
+        </Link>
 
-        <div className="pt-2">
-          {posts.map((post) => (
+        <div className="mt-10">
+          {posts.map((post, i) => (
             <Link
               key={post.slug}
               href={`/blog/${post.slug}`}
-              className="block border-b border-[var(--line)] py-5 last:border-b-0"
+              className={`group block py-4 no-underline ${i > 0 ? "border-t border-[var(--line)]" : ""}`}
             >
-              <div className="flex items-center justify-between gap-2">
-                <h2 className="t-shimmer cursor-default text-[15px] font-medium" data-text={post.title}>
+              <div className="flex items-baseline justify-between gap-4">
+                <h2 className="text-[15px] font-medium text-[var(--ink)] transition-colors group-hover:text-[var(--ink-soft)]">
                   {post.title}
                 </h2>
-                <span className="shrink-0 text-[10px] tracking-wide text-[var(--ink-soft)]">
-                  {post.date}
-                </span>
+                <span className="shrink-0 text-[12px] text-[var(--ink-soft)]">{post.date}</span>
               </div>
-              <p className="mt-1.5 text-[12.5px] leading-relaxed text-[var(--ink-soft)]">
-                {post.excerpt}
-              </p>
+              <p className="mt-1.5 text-[13px] leading-relaxed text-[var(--ink-soft)]">{post.excerpt}</p>
             </Link>
           ))}
         </div>
       </FadeIn>
-    </MacWindow>
+    </main>
   );
 }

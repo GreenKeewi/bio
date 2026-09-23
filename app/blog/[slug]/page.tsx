@@ -6,7 +6,6 @@ import { MDXRemote } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
-import MacWindow from "../../components/MacWindow";
 import FadeIn from "../../components/FadeIn";
 import { Pre } from "../../components/MdxCodeBlock";
 import { getAllPosts, getPostBySlug } from "../lib";
@@ -27,18 +26,12 @@ export default async function BlogPost({
   const { frontmatter, content } = post;
 
   return (
-    <MacWindow title={frontmatter.title} className="[&>div]:max-w-2xl">
-      <FadeIn className="px-5 py-6 sm:px-8 sm:py-8">
-        <Link
-          href="/blog"
-          className="mb-5 inline-flex text-[11px] text-[var(--ink-soft)] transition-colors hover:text-[var(--ink)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--ink)]"
-          >
-          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-            <path d="m14 6-6 6 6 6" />
-            <path d="M8 12h11" />
-          </svg>
-          Back to blog
+    <main className="mx-auto flex min-h-full w-full max-w-[560px] flex-col px-5 py-16 sm:px-8">
+      <FadeIn>
+        <Link href="/blog" className="text-[13px] text-[var(--ink-soft)] transition-colors hover:text-[var(--ink)]">
+          ← blog
         </Link>
+
         {frontmatter.image && (
           <Image
             src={frontmatter.image}
@@ -46,20 +39,18 @@ export default async function BlogPost({
             width={128}
             height={72}
             sizes="128px"
-            className="blog-cover mx-auto mb-8 aspect-[16/9] w-full max-w-xl rounded-[2rem] border border-[var(--line)] object-cover shadow-[0_12px_32px_rgba(0,0,0,0.28)] grayscale contrast-125 brightness-90"
+            className="blog-cover mx-auto mt-8 mb-2 aspect-[16/9] w-full max-w-xl rounded-[2rem] border border-[var(--line)] object-cover shadow-[0_12px_32px_rgba(0,0,0,0.28)] grayscale contrast-125 brightness-90"
           />
         )}
 
-        <header className="border-b border-[var(--line)] pb-6">
-          <h1 className="font-[family-name:var(--font-serif)] italic text-2xl leading-tight tracking-tight text-[var(--ink)] sm:text-3xl">
+        <header className="mt-8">
+          <h1 className="font-[family-name:var(--font-serif)] text-2xl leading-tight tracking-tight text-[var(--ink-dim)] sm:text-3xl">
             {frontmatter.title}
           </h1>
-          <p className="mt-1.5 text-[10px] uppercase tracking-[0.2em] text-[var(--ink-soft)]">
-            {frontmatter.date}
-          </p>
+          <p className="mt-1.5 text-[12px] text-[var(--ink-soft)]">{frontmatter.date}</p>
         </header>
 
-        <div className="prose-blog mx-auto max-w-[68ch] pt-7 text-[14px] leading-7 text-[var(--ink)] sm:text-[15px] sm:leading-8">
+        <div className="prose-blog mx-auto max-w-[68ch] pt-7 text-[14px] leading-7 text-[var(--ink-dim)] sm:text-[15px] sm:leading-8">
           <MDXRemote
             source={content}
             components={{ pre: Pre }}
@@ -72,6 +63,6 @@ export default async function BlogPost({
           />
         </div>
       </FadeIn>
-    </MacWindow>
+    </main>
   );
 }
