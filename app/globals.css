@@ -40,17 +40,11 @@ body {
   position: relative;
 }
 
-/* small, low-opacity underline on every link by default, plus a super slight shimmer */
+/* links keep a restrained shimmer without underlining */
 a {
   color: var(--ink);
-  text-decoration: underline;
-  text-decoration-color: var(--line);
-  text-underline-offset: 2px;
-  transition: text-decoration-color var(--duration-fast, 250ms) var(--ease-smooth-out, ease);
-  animation: link-shimmer 1.6s ease-in-out infinite;
-}
-a:hover {
-  text-decoration-color: var(--ink);
+  text-decoration: none;
+  animation: link-shimmer 4s ease-in-out infinite;
 }
 @keyframes link-shimmer {
   0%,
@@ -58,7 +52,7 @@ a:hover {
     text-shadow: 0 0 0 transparent;
   }
   50% {
-    text-shadow: 0 0 7px color-mix(in srgb, var(--ink) 55%, transparent);
+    text-shadow: 0 0 7px color-mix(in srgb, var(--ink) 36.1857375%, transparent);
   }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -190,15 +184,12 @@ a:hover {
 }
 .prose-blog a {
   color: var(--ink);
-  text-decoration: underline;
-  text-decoration-color: var(--line);
-  text-underline-offset: 2px;
 }
 .prose-blog strong {
   color: var(--ink-dim);
 }
-.blog-cover {
-  image-rendering: pixelated;
+.blog-page a {
+  animation: none;
 }
 .prose-blog blockquote {
   margin: 1.8em 0;

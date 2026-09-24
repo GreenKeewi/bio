@@ -1,6 +1,5 @@
 import "katex/dist/katex.min.css";
 import Link from "next/link";
-import Image from "next/image";
 import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
@@ -31,17 +30,6 @@ export default async function BlogPost({
         <Link href="/blog" className="text-[13px] text-[var(--ink-soft)] transition-colors hover:text-[var(--ink)]">
           ← blog
         </Link>
-
-        {frontmatter.image && (
-          <Image
-            src={frontmatter.image}
-            alt=""
-            width={128}
-            height={72}
-            sizes="128px"
-            className="blog-cover mx-auto mt-8 mb-2 aspect-[16/9] w-full max-w-xl rounded-[2rem] border border-[var(--line)] object-cover shadow-[0_12px_32px_rgba(0,0,0,0.28)] grayscale contrast-125 brightness-90"
-          />
-        )}
 
         <header className="mt-8">
           <h1 className="font-[family-name:var(--font-serif)] text-2xl leading-tight tracking-tight text-[var(--ink-dim)] sm:text-3xl">
