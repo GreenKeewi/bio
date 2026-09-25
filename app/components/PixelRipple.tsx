@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 
-const DURATION = 900;
+const DURATION = 1800;
 const CELL = 22;
 const BAND = 90;
 
@@ -113,7 +113,7 @@ function usePixelRippleCanvas() {
   return { canvas, trigger };
 }
 
-export function DarkWord({ children }: { children: ReactNode }) {
+export function RippleWord({ children }: { children: ReactNode }) {
   const wordRef = useRef<HTMLButtonElement | null>(null);
   const { canvas, trigger } = usePixelRippleCanvas();
 

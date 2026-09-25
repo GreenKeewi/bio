@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { DarkWord } from "./components/PixelRipple";
+import { RippleWord } from "./components/PixelRipple";
 
 const formatTorontoTime = () =>
   new Intl.DateTimeFormat("en-US", {
@@ -50,13 +50,12 @@ export default function Home() {
     <main className="mx-auto flex min-h-full w-full max-w-[560px] flex-col justify-center px-5 py-16 sm:px-8">
       <div className={`t-fade ${shown ? "is-shown" : ""}`}>
         <p className="max-w-lg text-[15px] leading-[1.85] text-[var(--ink-dim)]">
-          I&apos;m harsh, a software engineer in Toronto. I ship{" "}
+          I&apos;m harsh, a software engineer in <RippleWord>Toronto</RippleWord>. I ship{" "}
           <InlineLink href="https://folia-notes.vercel.app/">Folia</InlineLink>,{" "}
           <InlineLink href="https://heysolin.com">Solin</InlineLink>,{" "}
           <InlineLink href="https://usefable.ca">Fable</InlineLink>, and whatever else seems worth building
-          that week. I like the <DarkWord>dark</DarkWord>. Right now I&apos;m a GTM Engineer Intern at{" "}
-          <InlineLink href="https://x.com/dreamworkhq">Dreamwork</InlineLink>, building tools that help
-          people spend less time applying and more time interviewing. My DMs are open on{" "}
+          that week. GTM Engineer Intern at @<InlineLink href="https://x.com/dreamworkhq">Dreamwork</InlineLink>.
+          My DMs are open on{" "}
           <InlineLink href="https://x.com/dndharsh0">X</InlineLink>, my code is on{" "}
           <InlineLink href="https://github.com/GreenKeewi">GitHub</InlineLink>, my hackathon stuff is on{" "}
           <InlineLink href="https://devpost.com/GreenKeewi">Devpost</InlineLink>, and I write occasionally on
