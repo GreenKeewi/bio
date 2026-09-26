@@ -7,6 +7,8 @@ const DURATION = 1800;
 const CELL = 22;
 const BAND = 90;
 
+type RippleOrigin = { x: number; y: number; start: number };
+
 // small deterministic hash so each cell's flicker looks random but is stable frame-to-frame
 function cellNoise(cx: number, cy: number) {
   const n = Math.sin(cx * 12.9898 + cy * 78.233) * 43758.5453;
@@ -17,7 +19,7 @@ function usePixelRippleCanvas() {
   const [mounted, setMounted] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const rafRef = useRef<number | null>(null);
-  const originRef = useRef<{ x: number; y: number; start: number } | null>(null);
+  const originsRef = useRef<RippleOrigin[]>([]);
 
   useEffect(() => {
     const id = requestAnimationFrame(() => setMounted(true));
@@ -41,11 +43,11 @@ function usePixelRippleCanvas() {
     if (!canvas) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-    originRef.current = { x, y, start: performance.now() };
-    if (rafRef.current) return;
-
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
+    originsRef.current.push({ x, y, start: performance.now() });
+    if (rafRef.current) return;
+
     const dpr = devicePixelRatio;
     const ink = getComputedStyle(document.documentElement).getPropertyValue("--ink").trim() || "#ededec";
     const w = window.innerWidth;
@@ -53,16 +55,13 @@ function usePixelRippleCanvas() {
     const maxRadius = Math.hypot(w, h) / 2 + BAND;
 
     const draw = () => {
-      const origin = originRef.current;
-      if (!origin) {
-        rafRef.current = null;
-        return;
-      }
-      const elapsed = performance.now() - origin.start;
-      const progress = elapsed / DURATION;
+      const now = performance.now();
+      const activeOrigins = originsRef.current.filter((origin) => (now - origin.start) / DURATION < 1.15);
+      originsRef.current = activeOrigins;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      if (progress < 1.15) {
+      for (const origin of activeOrigins) {
+        const progress = (now - origin.start) / DURATION;
         const radius = progress * maxRadius;
         const cols = Math.ceil(w / CELL);
         const rows = Math.ceil(h / CELL);
@@ -82,9 +81,11 @@ function usePixelRippleCanvas() {
             ctx.fillRect(cx * CELL * dpr, cy * CELL * dpr, (CELL - 2) * dpr, (CELL - 2) * dpr);
           }
         }
+      }
+
+      if (activeOrigins.length > 0) {
         rafRef.current = requestAnimationFrame(draw);
       } else {
-        originRef.current = null;
         rafRef.current = null;
       }
     };

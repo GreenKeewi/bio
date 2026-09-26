@@ -44,7 +44,7 @@ body {
 a {
   color: var(--ink);
   text-decoration: none;
-  animation: link-shimmer 4s ease-in-out infinite;
+  animation: link-shimmer 3s ease-in-out infinite;
 }
 @keyframes link-shimmer {
   0%,
@@ -52,7 +52,7 @@ a {
     text-shadow: 0 0 0 transparent;
   }
   50% {
-    text-shadow: 0 0 7px color-mix(in srgb, var(--ink) 36.1857375%, transparent);
+    text-shadow: 0 0 8px color-mix(in srgb, var(--ink) 40%, transparent);
   }
 }
 @media (prefers-reduced-motion: reduce) {
