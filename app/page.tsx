@@ -70,7 +70,7 @@ export default function Home() {
           </p>
 
           <p>
-            My DMs are open on <InlineLink href="https://x.com/dndharsh0">X</InlineLink>, my code is on{" "}
+            My DMs are open on <InlineLink href="https://x.com/harshTalksAI">X</InlineLink>, my code is on{" "}
             <InlineLink href="https://github.com/GreenKeewi">GitHub</InlineLink>, my hackathon stuff on{" "}
             <InlineLink href="https://devpost.com/GreenKeewi">Devpost</InlineLink>, and I write occasionally on
             the <InlineLink href="/blog">blog</InlineLink>. Reach me by{" "}
