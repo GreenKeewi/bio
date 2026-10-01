@@ -50,26 +50,26 @@ export default function Home() {
     <main className="mx-auto flex min-h-full w-full max-w-[540px] flex-col px-5 py-10 sm:px-8 sm:py-12">
       <div className={`t-fade my-auto ${shown ? "is-shown" : ""}`}>
         <div className="max-w-lg space-y-4 text-[14px] leading-[1.75] text-[var(--ink-dim)]">
-          <p>
+          <p className="text-left">
             I&apos;m harsh👋, a 15-year-old founder/engineer based in <RippleWord>Toronto</RippleWord>. I&apos;ve been a
             dev since I was 9, started with HTML &amp; CSS, then to python, and now I&apos;m stuck with React and
             NextJS.
           </p>
 
-          <p>
+          <p className="text-right">
             I&apos;ve shipped <InlineLink href="https://folia-notes.vercel.app/">Folia</InlineLink>,{" "}
             <InlineLink href="https://heysolin.com">Solin</InlineLink>,{" "}
             <InlineLink href="https://usefable.ca">Fable</InlineLink>, and whatever else seems worth building
             that week.
           </p>
 
-          <p>
+          <p className="text-left">
             Currently GTM Engineer Intern at @<InlineLink href="https://x.com/dreamworkhq">Dreamwork</InlineLink>.
             Worked with <InlineLink href="https://x.com/HomeDepot">@TheHomeDepot</InlineLink>, and{" "}
             <InlineLink href="https://x.com/NEEIOnline">@NEE</InlineLink>.
           </p>
 
-          <p>
+          <p className="text-right">
             My DMs are open on <InlineLink href="https://x.com/harshTalksAI">X</InlineLink>, I post on{" "}
             <InlineLink href="https://www.youtube.com/channel/UCUSQ134t1G9XRf3x9oY-1wQ">YouTube</InlineLink> and{" "}
             <InlineLink href="https://www.instagram.com/harshtalksai/">Instagram</InlineLink>, my code is on{" "}
