@@ -44,9 +44,14 @@ To add or edit a project, social link, or "side quest," edit the `PROJECTS` / `L
 
 ## Deployment
 
-Deploy on Cloudflare Pages with these build settings:
+Deploy on Cloudflare Workers with these build settings:
 
-- Build command: `npm run build` (or `npx next build`)
-- Build output directory: `out`
+- Build command: `npm run build`
+- Deploy command: `npx wrangler deploy`
+- Production branch: `master`
 
-Next.js is configured with `output: "export"`, so each build generates the static HTML, CSS, JavaScript, and public assets in `out/`. To preview the production export locally, serve `out/` with a static file server; `next start` does not support static exports.
+Next.js is configured with `output: "export"`, so each build generates the static HTML, CSS, JavaScript, and public assets in `out/`. `wrangler.jsonc` deploys that directory as static assets for the `bio` Worker, with clean HTML URLs and the exported 404 page. No OpenNext adapter is needed.
+
+To preview the production export locally, run `npm run build` followed by `npx wrangler dev`; `next start` does not support static exports. To deploy manually, run `npm run build` followed by `npx wrangler deploy`.
+
+Cloudflare Pages can also host the export: use `npm run build` as the build command and `out` as the build output directory, with no Wrangler deploy command.
