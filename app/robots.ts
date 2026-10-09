@@ -1,5 +1,7 @@
 import type { MetadataRoute } from "next";
 
+export const dynamic = "force-static";
+
 // Block known AI crawlers/scrapers from indexing or training on this
 // site. Standard search engines are left alone (no blanket disallow).
 const AI_BOTS = [

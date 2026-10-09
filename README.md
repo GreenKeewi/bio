@@ -21,8 +21,7 @@ Open [http://localhost:3000](http://localhost:3000).
 Other scripts:
 
 ```bash
-npm run build   # production build
-npm run start   # serve the production build
+npm run build   # export the production site to out/
 npm run lint    # eslint
 ```
 
@@ -45,4 +44,9 @@ To add or edit a project, social link, or "side quest," edit the `PROJECTS` / `L
 
 ## Deployment
 
-Deployed on [Vercel](https://vercel.com); pushing to the main branch triggers a deploy.
+Deploy on Cloudflare Pages with these build settings:
+
+- Build command: `npm run build` (or `npx next build`)
+- Build output directory: `out`
+
+Next.js is configured with `output: "export"`, so each build generates the static HTML, CSS, JavaScript, and public assets in `out/`. To preview the production export locally, serve `out/` with a static file server; `next start` does not support static exports.
