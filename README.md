@@ -1,13 +1,13 @@
-# harsh.bio
+# harshs.dev
 
-Personal landing page and portfolio, built with Next.js (App Router) and Tailwind CSS v4. A single-page "desktop" style UI with a small MDX-powered blog.
+Personal website at https://harshs.dev, built with Next.js (App Router) and Tailwind CSS v4. A simple text page with a small MDX-powered blog.
 
 ## Features
 
-- Bio + social links, with live scaled-iframe previews of featured projects (falls back gracefully for sites that block embedding)
-- "Side quests" list of smaller/archived projects
+- Short bio, work experience, project links, and contact links
+- Live local time in Toronto, Canada, using the America/Toronto time zone
 - Blog at `/blog`, written in MDX with GitHub-flavored markdown, LaTeX (via `remark-math`/`rehype-katex`), and Mermaid diagram support
-- Custom "Mac window" chrome, ASCII background, and a menu bar shared across pages
+- A pixel ripple on the location text; no other page animations
 
 ## Getting started
 
@@ -29,9 +29,9 @@ npm run lint    # eslint
 
 ```
 app/
-  page.tsx           # landing page (bio, project cards, links — edit the data arrays here)
-  layout.tsx          # root layout, fonts, global chrome
-  components/         # MacWindow, AsciiBackground, MenuBar, FadeIn, Mermaid, MdxCodeBlock
+  page.tsx           # landing page (bio, work experience, project and contact links)
+  layout.tsx          # root layout and metadata for harshs.dev
+  components/         # LiveClock, PixelRipple, Mermaid, MdxCodeBlock
   blog/
     page.tsx          # blog index
     [slug]/page.tsx   # individual post route
@@ -40,7 +40,7 @@ content/
   blog/*.mdx           # blog post source files
 ```
 
-To add or edit a project, social link, or "side quest," edit the `PROJECTS` / `LINKS` / `MINOR_PROJECTS` arrays at the top of `app/page.tsx`. To add a blog post, drop a new `.mdx` file into `content/blog/` with the same frontmatter shape as the existing posts.
+To edit the bio, work experience, projects, or links, edit `app/page.tsx`. To add a blog post, drop a new `.mdx` file into `content/blog/` with the same frontmatter shape as the existing posts.
 
 ## Deployment
 

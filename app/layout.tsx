@@ -1,35 +1,24 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import { Lora } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-});
-
-const lora = Lora({
-  variable: "--font-lora",
-  subsets: ["latin"],
-  style: ["normal", "italic"],
-});
-
 const NAME = "harsh";
+const DESCRIPTION = "I’m Harsh. I build websites and apps in Toronto, Canada.";
 
 export const metadata: Metadata = {
   title: NAME,
+  description: DESCRIPTION,
+  metadataBase: new URL("https://harshs.dev"),
   openGraph: {
     title: NAME,
+    description: DESCRIPTION,
+    url: "https://harshs.dev",
     type: "profile",
   },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html
-      lang="en"
-      className={`${inter.variable} ${lora.variable} h-full antialiased`}
-    >
+    <html lang="en" className="h-full antialiased">
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );

@@ -131,7 +131,7 @@ export function RippleWord({ children }: { children: ReactNode }) {
         type="button"
         onMouseEnter={fire}
         onClick={fire}
-        className="cursor-pointer border-none bg-transparent p-0 text-inherit underline decoration-[var(--line)] decoration-dotted underline-offset-2 transition-colors hover:decoration-[var(--ink)]"
+        className="cursor-pointer border-none bg-transparent p-0 text-inherit underline decoration-dotted underline-offset-4"
         style={{ font: "inherit" }}
       >
         {children}
