@@ -49,7 +49,7 @@ function usePixelRippleCanvas() {
     if (rafRef.current) return;
 
     const dpr = devicePixelRatio;
-    const ink = getComputedStyle(document.documentElement).getPropertyValue("--ink").trim() || "#ededec";
+    const ink = getComputedStyle(document.documentElement).getPropertyValue("--accent-coral").trim() || "#ffb69e";
     const w = window.innerWidth;
     const h = window.innerHeight;
     const maxRadius = Math.hypot(w, h) / 2 + BAND;
@@ -131,7 +131,8 @@ export function RippleWord({ children }: { children: ReactNode }) {
         type="button"
         onMouseEnter={fire}
         onClick={fire}
-        className="cursor-pointer border-none bg-transparent p-0 text-inherit underline decoration-dotted underline-offset-4"
+        className="ripple-word cursor-pointer border-none bg-transparent p-0"
+        title="Make a little splash"
         style={{ font: "inherit" }}
       >
         {children}

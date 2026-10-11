@@ -1,20 +1,28 @@
 @import "tailwindcss";
 
 :root {
-  --bg-base: #060606;
-  --plate: #141414;
-  --ink: #ededec;
-  --ink-soft: #83827c;
+  --bg-base: #111310;
+  --plate: #1c1e19;
+  --ink: #f3efe4;
+  --ink-soft: #a39f92;
+  --accent-blue: #a7c8ef;
+  --accent-coral: #ffb69e;
+  --accent-green: #c5db90;
+  --accent-purple: #c4b6ee;
   --line: rgba(237, 237, 236, 0.1);
   --ink-dim: color-mix(in srgb, var(--ink) 90%, transparent);
 }
 
 @media (prefers-color-scheme: light) {
   :root {
-    --bg-base: #faf9f6;
-    --plate: #ffffff;
-    --ink: #1c1c1e;
-    --ink-soft: #6b6a64;
+    --bg-base: #fffaf0;
+    --plate: #f5efdf;
+    --ink: #292c23;
+    --ink-soft: #6e7064;
+    --accent-blue: #355b99;
+    --accent-coral: #a34526;
+    --accent-green: #4b6b1e;
+    --accent-purple: #6a469b;
     --line: rgba(28, 28, 30, 0.1);
   }
 }
@@ -37,14 +45,33 @@ body {
 }
 
 a {
-  color: var(--ink);
-  text-decoration: underline;
-  text-decoration-color: var(--ink-soft);
-  text-underline-offset: 4px;
+  color: var(--accent-blue);
+  font-weight: 500;
+  text-decoration: none;
+  border-radius: 0.15em;
+  box-decoration-break: clone;
 }
 
-a:hover {
-  text-decoration-color: var(--ink);
+a:hover,
+.ripple-word:hover {
+  background-color: color-mix(in srgb, currentColor 12%, transparent);
+}
+
+.link-blue {
+  color: var(--accent-blue);
+}
+
+.link-coral {
+  color: var(--accent-coral);
+}
+
+.link-green {
+  color: var(--accent-green);
+}
+
+.link-purple,
+.ripple-word {
+  color: var(--accent-purple);
 }
 
 a:focus-visible,
@@ -96,7 +123,7 @@ button:focus-visible {
   padding: 0;
 }
 .prose-blog a {
-  color: var(--ink);
+  color: var(--accent-blue);
 }
 .prose-blog strong {
   color: var(--ink-dim);
