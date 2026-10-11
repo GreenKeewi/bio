@@ -162,8 +162,8 @@ button:focus-visible {
 .home-copy p + p { margin-top: 14px; }
 
 .inline-link {
-  color: var(--ink);
-  font-weight: 600;
+  color: inherit;
+  font-weight: inherit;
 }
 
 .home-footer {
