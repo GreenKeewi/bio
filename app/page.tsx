@@ -1,6 +1,17 @@
 import type { ReactNode } from "react";
+import Image from "next/image";
 import LiveClock from "./components/LiveClock";
 import { RippleWord } from "./components/PixelRipple";
+
+const LINK_ICONS: Record<string, string> = {
+  "https://lumee.harshs.dev": "lumee",
+  "https://x.com/HomeDepot": "homedepot",
+  "https://github.com/GreenKeewi": "github",
+  "https://www.instagram.com/harshtalksai/": "instagram",
+  "https://www.youtube.com/channel/UCUSQ134t1G9XRf3x9oY-1wQ": "youtube",
+  "https://x.com/harshTalksAI": "x",
+  "https://devpost.com/GreenKeewi": "devpost",
+};
 
 function InlineLink({
   href,
@@ -9,7 +20,17 @@ function InlineLink({
   href: string;
   children: ReactNode;
 }) {
-  return <a className="inline-link" href={href}>{children}</a>;
+  const icon = LINK_ICONS[href];
+  return (
+    <a className={`inline-link${icon ? " has-icon" : ""}`} href={href}>
+      {children}
+      {icon && (
+        <span className="link-icon" aria-hidden="true">
+          <Image src={`/link-icons/${icon}.svg`} width={24} height={24} alt="" unoptimized />
+        </span>
+      )}
+    </a>
+  );
 }
 
 export default function Home() {

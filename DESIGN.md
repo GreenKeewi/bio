@@ -2,9 +2,11 @@
 
 The latest portfolio direction overrides conflicting Lumee rules below:
 - Black and white only; plain HTML/CSS feel, compact text and no panels.
-- No photos, illustrations, orange actions, or decorative controls.
+- No large photos, illustrations, orange actions, or decorative controls.
+- Real brand icons may peek from small monochrome circles beside links on hover/focus.
+- Inline links inherit body color and font weight.
 - Static, very faint stars and a CSS Big Dipper in the background.
-- Ripple is the only animation. Respect reduced motion.
+- Ripple and the brief icon peek are the only animations. Respect reduced motion.
 - Keep work experience, Lumee, short paragraphs, and Toronto local time.
 - Links have no underlines; keep visible keyboard focus.
 
