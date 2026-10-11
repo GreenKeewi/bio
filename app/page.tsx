@@ -1,89 +1,89 @@
-"use client";
-
-import { useEffect, useState } from "react";
+import type { ReactNode } from "react";
+import Image from "next/image";
+import LiveClock from "./components/LiveClock";
 import { RippleWord } from "./components/PixelRipple";
 
-const formatTorontoTime = () =>
-  new Intl.DateTimeFormat("en-US", {
-    timeZone: "America/Toronto",
-    hour: "numeric",
-    minute: "2-digit",
-    second: "2-digit",
-    hour12: true,
-  })
-    .format(new Date())
-    .toLowerCase();
+const LINK_ICONS: Record<string, string> = {
+  "https://lumee.harshs.dev": "lumee",
+  "https://x.com/HomeDepot": "homedepot",
+  "https://github.com/GreenKeewi": "github",
+  "https://www.instagram.com/harshtalksai/": "instagram",
+  "https://www.youtube.com/channel/UCUSQ134t1G9XRf3x9oY-1wQ": "youtube",
+  "https://x.com/harshTalksAI": "x",
+  "https://devpost.com/GreenKeewi": "devpost",
+};
 
-function LiveClock() {
-  const [time, setTime] = useState(formatTorontoTime);
-
-  useEffect(() => {
-    const id = setInterval(() => setTime(formatTorontoTime()), 1000);
-    return () => clearInterval(id);
-  }, []);
-
+function InlineLink({
+  href,
+  children,
+}: {
+  href: string;
+  children: ReactNode;
+}) {
+  const icon = LINK_ICONS[href];
   return (
-    <span className="tabular-nums" suppressHydrationWarning>
-      {time}
-    </span>
-  );
-}
-
-function InlineLink({ href, children }: { href: string; children: React.ReactNode }) {
-  const isExternal = href.startsWith("http");
-  return (
-    <a href={href} {...(isExternal && { target: "_blank", rel: "noopener noreferrer" })}>
+    <a className={`inline-link${icon ? " has-icon" : ""}`} href={href}>
       {children}
+      {icon && (
+        <span className={`link-icon icon-${icon}`} aria-hidden="true">
+          <Image src={`/link-icons/${icon}.svg`} width={24} height={24} alt="" unoptimized />
+        </span>
+      )}
     </a>
   );
 }
 
 export default function Home() {
-  const [shown, setShown] = useState(false);
-
-  useEffect(() => {
-    const t = setTimeout(() => setShown(true), 60);
-    return () => clearTimeout(t);
-  }, []);
-
   return (
-    <main className="mx-auto flex min-h-full w-full max-w-[540px] flex-col px-5 py-10 sm:px-8 sm:py-12">
-      <div className={`t-fade my-auto ${shown ? "is-shown" : ""}`}>
-        <div className="max-w-lg space-y-4 text-[14px] leading-[1.75] text-[var(--ink-dim)]">
-          <p className="text-left">
-            I&apos;m harsh👋, a 15-year-old founder/engineer based in <RippleWord>Toronto</RippleWord>. I&apos;ve been a
-            dev since I was 9, started with HTML &amp; CSS, then to python, and now I&apos;m stuck with React and
-            NextJS.
+    <main className="home-shell">
+      <div className="big-dipper" aria-hidden="true">
+        {Array.from({ length: 7 }, (_, index) => <span key={index} />)}
+      </div>
+      <article className="home-content">
+        <header className="home-intro">
+          <h1>harsh.</h1>
+          <span className="home-domain">harshs.dev</span>
+        </header>
+
+        <div className="home-copy">
+          <p>
+            I&apos;m Harsh, a 15-year-old who builds websites and apps.
+            I&apos;ve been coding since I was 9.
           </p>
 
-          <p className="text-right">
-            I&apos;ve shipped <InlineLink href="https://folia-notes.vercel.app/">Folia</InlineLink>,{" "}
-            <InlineLink href="https://heysolin.com">Solin</InlineLink>,{" "}
-            <InlineLink href="https://usefable.ca">Fable</InlineLink>, and whatever else seems worth building
-            that week.
+          <p>
+            I&apos;m currently an engineering intern at <InlineLink href="https://x.com/dreamworkhq">Dreamwork</InlineLink>.
+            I&apos;ve also worked with <InlineLink href="https://x.com/HomeDepot">The Home Depot</InlineLink> and{" "}
+            <InlineLink href="https://x.com/NEEIOnline">NEE</InlineLink>.
           </p>
 
-          <p className="text-left">
-            Currently GTM Engineer Intern at @<InlineLink href="https://x.com/dreamworkhq">Dreamwork</InlineLink>.
-            Worked with <InlineLink href="https://x.com/HomeDepot">@TheHomeDepot</InlineLink>, and{" "}
-            <InlineLink href="https://x.com/NEEIOnline">@NEE</InlineLink>.
+          <p>
+            I&apos;ve built <InlineLink href="https://lumee.harshs.dev">Lumee</InlineLink>,{" "}
+            <InlineLink href="https://heysolin.com">Solin</InlineLink>, and{" "}
+            <InlineLink href="https://usefable.ca">Fable</InlineLink>.
           </p>
 
-          <p className="text-right">
-            My DMs are open on <InlineLink href="https://x.com/harshTalksAI">X</InlineLink>, I post on{" "}
-            <InlineLink href="https://www.youtube.com/channel/UCUSQ134t1G9XRf3x9oY-1wQ">YouTube</InlineLink> and{" "}
-            <InlineLink href="https://www.instagram.com/harshtalksai/">Instagram</InlineLink>, my code is on{" "}
-            <InlineLink href="https://github.com/GreenKeewi">GitHub</InlineLink>, my hackathon stuff on{" "}
-            <InlineLink href="https://devpost.com/GreenKeewi">Devpost</InlineLink>, and I write occasionally on
-            the <InlineLink href="/blog">blog</InlineLink>. Reach me by{" "}
-            <InlineLink href="mailto:harshithseeta@gmail.com">email</InlineLink> any time.
+          <p>
+            Have an idea? Say hi by <InlineLink href="mailto:harshithseeta@gmail.com">email</InlineLink> or on{" "}
+            <InlineLink href="https://x.com/harshTalksAI">X</InlineLink>.
+          </p>
+          <p>
+            Elsewhere: <InlineLink href="https://github.com/GreenKeewi">GitHub</InlineLink>,{" "}
+            <InlineLink href="https://www.youtube.com/channel/UCUSQ134t1G9XRf3x9oY-1wQ">YouTube</InlineLink>,{" "}
+            <InlineLink href="https://www.instagram.com/harshtalksai/">Instagram</InlineLink>, and{" "}
+            <InlineLink href="https://devpost.com/GreenKeewi">Devpost</InlineLink>. I also{" "}
+            <InlineLink href="/blog">write</InlineLink>.
           </p>
         </div>
 
-        <p className="mt-7 text-[11px] tracking-wide text-[var(--ink-soft)]">
-          Toronto, Ontario · <LiveClock />
-        </p>
-      </div>
+        <footer className="home-footer">
+          <div className="home-location">
+            <RippleWord>Toronto, Canada</RippleWord>
+            <span aria-hidden="true">·</span>
+            <LiveClock />
+          </div>
+        </footer>
+      </article>
     </main>
   );
 }

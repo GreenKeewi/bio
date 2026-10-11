@@ -1,29 +1,23 @@
 @import "tailwindcss";
 
 :root {
-  --bg-base: #060606;
-  --bg-base-2: #0a0a0a;
+  color-scheme: dark;
+  --bg-base: #080808;
   --plate: #141414;
-  --ink: #ededec;
-  --ink-soft: #83827c;
-  --line: rgba(237, 237, 236, 0.1);
-  --ink-dim: color-mix(in srgb, var(--ink) 90%, transparent);
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    --bg-base: #faf9f6;
-    --bg-base-2: #f3f1ec;
-    --plate: #ffffff;
-    --ink: #1c1c1e;
-    --ink-soft: #6b6a64;
-    --line: rgba(28, 28, 30, 0.1);
-  }
+  --ink: #ededed;
+  --ink-soft: #969696;
+  --accent: #fff;
+  --accent-foreground: #fff;
+  --accent-blue: #ededed;
+  --accent-coral: #ededed;
+  --accent-green: #ededed;
+  --accent-purple: #ededed;
+  --line: rgba(255, 255, 255, 0.12);
+  --ink-dim: #c4c4c4;
 }
 
 @theme inline {
-  --font-serif: var(--font-lora);
-  --font-sans: var(--font-inter);
+  --font-sans: Arial, Helvetica, sans-serif;
 }
 
 html,
@@ -33,117 +27,204 @@ body {
 
 body {
   color: var(--ink-dim);
-  font-family: var(--font-inter), Arial, Helvetica, sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 15px;
+  line-height: 1.75;
   background-color: var(--bg-base);
-  background-image: radial-gradient(ellipse 80% 60% at 20% 0%, rgba(255, 255, 255, 0.05), transparent 60%);
-  background-attachment: fixed;
-  position: relative;
 }
 
-/* links keep a restrained shimmer without underlining */
 a {
-  color: var(--ink);
+  color: var(--accent-blue);
+  font-weight: 500;
   text-decoration: none;
-  animation: link-shimmer 3s ease-in-out infinite;
-}
-@keyframes link-shimmer {
-  0%,
-  100% {
-    text-shadow: 0 0 0 transparent;
-  }
-  50% {
-    text-shadow: 0 0 8px color-mix(in srgb, var(--ink) 40%, transparent);
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  a {
-    animation: none;
-  }
+  border-radius: 0.15em;
+  box-decoration-break: clone;
 }
 
-@media (prefers-color-scheme: light) {
-  body {
-    background-image: radial-gradient(ellipse 80% 60% at 20% 0%, rgba(0, 0, 0, 0.03), transparent 60%);
-  }
+a:hover,
+.ripple-word:hover {
+  background-color: color-mix(in srgb, currentColor 12%, transparent);
 }
 
-/* ── custom scrollbar: thin, low-contrast, blends into dark chrome ── */
-* {
-  scrollbar-width: thin;
-  scrollbar-color: rgba(237, 237, 236, 0.18) transparent;
+.link-blue {
+  color: var(--accent-blue);
 }
 
-*::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+.link-coral {
+  color: var(--accent-coral);
 }
 
-*::-webkit-scrollbar-track {
-  background: transparent;
+.link-green {
+  color: var(--accent-green);
 }
 
-*::-webkit-scrollbar-thumb {
-  background-color: rgba(237, 237, 236, 0.14);
-  border-radius: 999px;
-  border: 2px solid transparent;
-  background-clip: padding-box;
+.link-purple,
+.ripple-word {
+  color: var(--accent-purple);
 }
 
-*::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(237, 237, 236, 0.28);
-  background-clip: padding-box;
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 4px;
 }
 
-/* ── motion tokens (transitions-dev) ── */
-:root {
-  --duration-stagger: 40ms;
-  --duration-quick: 150ms;
-  --duration-fast: 250ms;
-  --duration-slow: 400ms;
-  --duration-very-slow: 500ms;
-  --ease-smooth-out: cubic-bezier(0.22, 1, 0.36, 1);
-  --ease-bounce-strong: cubic-bezier(0.34, 3.85, 0.64, 1);
-
-  --stagger-dur: 600ms;
-  --stagger-distance: 10px;
-  --stagger-stagger: 70ms;
-  --stagger-blur: 3px;
-  --stagger-ease: cubic-bezier(0.22, 1, 0.36, 1);
+/* Plain text and a static, barely visible constellation. */
+.home-shell {
+  position: relative;
+  isolation: isolate;
+  min-height: 100svh;
+  width: 100%;
+  overflow: clip;
 }
 
-/* entrance: fade + rise + blur-in for the window's document content */
-.t-fade {
-  opacity: 0;
-  transform: translateY(var(--stagger-distance));
-  filter: blur(var(--stagger-blur));
-  transition:
-    opacity var(--stagger-dur) var(--stagger-ease),
-    transform var(--stagger-dur) var(--stagger-ease),
-    filter var(--stagger-dur) var(--stagger-ease);
-  will-change: transform, opacity, filter;
-}
-.t-fade.is-shown {
-  opacity: 1;
-  transform: translateY(0);
-  filter: blur(0);
+.home-shell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.12;
+  background:
+    radial-gradient(circle at 12% 18%, #fff 0 0.7px, transparent 1px),
+    radial-gradient(circle at 27% 74%, #fff 0 0.8px, transparent 1px),
+    radial-gradient(circle at 8% 63%, #fff 0 0.6px, transparent 1px),
+    radial-gradient(circle at 83% 78%, #fff 0 0.8px, transparent 1px),
+    radial-gradient(circle at 65% 90%, #fff 0 0.7px, transparent 1px),
+    radial-gradient(circle at 92% 43%, #fff 0 0.6px, transparent 1px);
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .t-fade {
-    transition: none !important;
-    animation: none !important;
-    opacity: 1 !important;
-    transform: none !important;
-    filter: none !important;
-  }
+.big-dipper {
+  position: absolute;
+  top: 58px;
+  left: calc(50% + 180px);
+  width: 310px;
+  height: 190px;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.22;
+}
+
+.big-dipper span {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 5px #ffffff40;
+}
+
+/* Handle: Alkaid, Mizar, Alioth. Bowl: Megrez, Phecda, Merak, Dubhe. */
+.big-dipper span:nth-child(1) { left: 4%; top: 22%; }
+.big-dipper span:nth-child(2) { left: 22%; top: 34%; }
+.big-dipper span:nth-child(3) { left: 40%; top: 35%; }
+.big-dipper span:nth-child(4) { left: 57%; top: 43%; }
+.big-dipper span:nth-child(5) { left: 62%; top: 70%; }
+.big-dipper span:nth-child(6) { left: 87%; top: 62%; }
+.big-dipper span:nth-child(7) { left: 90%; top: 32%; }
+
+.home-content {
+  width: 100%;
+  max-width: 536px;
+  margin: 0 auto;
+  padding: clamp(72px, 15vh, 140px) 26px 64px;
+}
+
+.home-intro {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.home-intro h1 {
+  color: var(--ink);
+  font-family: "Courier New", monospace;
+  font-size: 25px;
+  font-weight: 400;
+  letter-spacing: -0.05em;
+  line-height: 1.2;
+}
+
+.home-domain {
+  color: var(--ink-soft);
+  font-family: "Courier New", monospace;
+  font-size: 11px;
+}
+
+.home-copy {
+  font-size: 15px;
+  line-height: 1.75;
+  text-wrap: pretty;
+}
+
+.home-copy p + p { margin-top: 14px; }
+
+.inline-link {
+  color: inherit;
+  font-weight: inherit;
+}
+
+.has-icon {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.link-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  margin-left: 4px;
+  padding: 3px;
+  border-radius: 50%;
+  background: #f5f5f5;
+  vertical-align: -5px;
+  overflow: hidden;
+}
+
+.link-icon img {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+}
+
+.icon-instagram {
+  background: radial-gradient(circle at 25% 100%, #ffdc80, #f77737 30%, #e1306c 55%, #833ab4 85%);
+}
+
+.icon-instagram img { filter: invert(1); }
+
+.home-footer {
+  margin-top: 28px;
+  color: var(--ink-soft);
+  font-size: 12px;
+}
+
+.home-location {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0 8px;
+}
+
+.home-location .ripple-word { color: var(--ink-soft); }
+
+@media (pointer: coarse) {
+  .home-location .ripple-word { min-height: 44px; }
+}
+
+@media (max-width: 800px) {
+  .big-dipper { top: auto; bottom: 32px; left: auto; right: 16px; width: 260px; height: 160px; opacity: 0.18; }
+  .home-content { padding-top: 64px; padding-bottom: 220px; }
 }
 
 /* ── blog post MDX content ── */
 .prose-blog h2 {
   margin-top: 2.8em;
   margin-bottom: 0.7em;
-  font-family: var(--font-serif);
-  font-style: italic;
   font-size: 1.32em;
   line-height: 1.15;
   color: var(--ink-dim);
@@ -183,13 +264,10 @@ a {
   padding: 0;
 }
 .prose-blog a {
-  color: var(--ink);
+  color: var(--accent-blue);
 }
 .prose-blog strong {
   color: var(--ink-dim);
-}
-.blog-page a {
-  animation: none;
 }
 .prose-blog blockquote {
   margin: 1.8em 0;
