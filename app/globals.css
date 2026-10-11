@@ -87,7 +87,7 @@ button:focus-visible {
   height: clamp(260px, 34vw, 620px);
   flex-shrink: 0;
   margin-top: auto;
-  background: url("https://lumee.harshs.dev/illustrations/landing/study-garden.png") center bottom / cover no-repeat;
+  background: url("/images/study-garden.png") center bottom / cover no-repeat;
   opacity: 0.72;
   mask-image: linear-gradient(to bottom, transparent, #000 46%);
 }
