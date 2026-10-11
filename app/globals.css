@@ -79,7 +79,19 @@ button:focus-visible {
   width: 100%;
   max-width: 544px;
   margin: 0 auto;
-  padding: clamp(56px, 9vh, 96px) 26px 32px;
+  padding: 24px 26px 32px;
+}
+
+.home-night-sky {
+  width: min(1120px, 100%);
+  height: clamp(160px, 23vw, 280px);
+  margin: 0 auto -32px;
+  flex-shrink: 0;
+  background: url("/images/night-sky.webp") center / cover no-repeat;
+  mask-image: linear-gradient(to right, transparent, #000 18%, #000 82%, transparent),
+    linear-gradient(to bottom, transparent, #000 24%, #000 60%, transparent);
+  mask-composite: intersect;
+  opacity: 0.9;
 }
 
 .home-landscape {
@@ -89,7 +101,9 @@ button:focus-visible {
   margin-top: auto;
   background: url("/images/study-garden.png") center bottom / cover no-repeat;
   opacity: 0.72;
-  mask-image: linear-gradient(to bottom, transparent, #000 46%);
+  mask-image: linear-gradient(to bottom, transparent, #000 42%, #000 86%, transparent),
+    linear-gradient(to right, transparent, #000 14%, #000 86%, transparent);
+  mask-composite: intersect;
 }
 
 .home-intro {
@@ -115,8 +129,10 @@ button:focus-visible {
 }
 
 .home-copy {
-  font-size: 15px;
-  line-height: 1.75;
+  color: var(--ink);
+  font-size: 16px;
+  line-height: 1.7;
+  text-wrap: pretty;
 }
 
 .home-copy p + p {
@@ -148,7 +164,7 @@ button:focus-visible {
 }
 
 @media (max-width: 600px) {
-  .home-content { padding-top: 48px; padding-bottom: 24px; }
+  .home-content { padding-top: 24px; padding-bottom: 24px; }
   .home-landscape { background-position: 55% bottom; }
 }
 
