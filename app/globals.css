@@ -2,20 +2,18 @@
 
 :root {
   color-scheme: dark;
-  --bg-base: #2b2a26;
-  --plate: #35342e;
-  --ink: #f1eade;
-  --ink-soft: #b8b1a5;
-  --accent: #b94e24;
+  --bg-base: #080808;
+  --plate: #141414;
+  --ink: #ededed;
+  --ink-soft: #969696;
+  --accent: #fff;
   --accent-foreground: #fff;
-  --surface-highlight: rgba(255, 243, 214, 0.07);
-  --surface-shadow: rgba(0, 0, 0, 0.18);
-  --accent-blue: #bdd0df;
-  --accent-coral: #e0b59a;
-  --accent-green: #cad2ac;
-  --accent-purple: #d0c1e3;
-  --line: rgba(225, 216, 195, 0.15);
-  --ink-dim: color-mix(in srgb, var(--ink) 90%, transparent);
+  --accent-blue: #ededed;
+  --accent-coral: #ededed;
+  --accent-green: #ededed;
+  --accent-purple: #ededed;
+  --line: rgba(255, 255, 255, 0.12);
+  --ink-dim: #c4c4c4;
 }
 
 @theme inline {
@@ -71,48 +69,65 @@ button:focus-visible {
   outline-offset: 4px;
 }
 
-/* A quiet page with a landscape anchored beneath the text. */
+/* Plain text and a static, barely visible constellation. */
 .home-shell {
-  display: flex;
-  flex-direction: column;
+  position: relative;
+  isolation: isolate;
   min-height: 100svh;
   width: 100%;
+  overflow: clip;
 }
+
+.home-shell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.12;
+  background:
+    radial-gradient(circle at 12% 18%, #fff 0 0.7px, transparent 1px),
+    radial-gradient(circle at 27% 74%, #fff 0 0.8px, transparent 1px),
+    radial-gradient(circle at 8% 63%, #fff 0 0.6px, transparent 1px),
+    radial-gradient(circle at 83% 78%, #fff 0 0.8px, transparent 1px),
+    radial-gradient(circle at 65% 90%, #fff 0 0.7px, transparent 1px),
+    radial-gradient(circle at 92% 43%, #fff 0 0.6px, transparent 1px);
+}
+
+.big-dipper {
+  position: absolute;
+  top: 58px;
+  left: calc(50% + 180px);
+  width: 310px;
+  height: 190px;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.22;
+}
+
+.big-dipper span {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 5px #ffffff40;
+}
+
+/* Handle: Alkaid, Mizar, Alioth. Bowl: Megrez, Phecda, Merak, Dubhe. */
+.big-dipper span:nth-child(1) { left: 4%; top: 22%; }
+.big-dipper span:nth-child(2) { left: 22%; top: 34%; }
+.big-dipper span:nth-child(3) { left: 40%; top: 35%; }
+.big-dipper span:nth-child(4) { left: 57%; top: 43%; }
+.big-dipper span:nth-child(5) { left: 62%; top: 70%; }
+.big-dipper span:nth-child(6) { left: 87%; top: 62%; }
+.big-dipper span:nth-child(7) { left: 90%; top: 32%; }
 
 .home-content {
-  width: calc(100% - 40px);
-  max-width: 544px;
-  margin: 12px auto 28px;
-  padding: 28px 30px;
-  border: 1px solid var(--line);
-  border-radius: 24px;
-  background: color-mix(in srgb, var(--plate) 62%, var(--bg-base));
-  box-shadow: inset 0 1px 0 var(--surface-highlight),
-    0 2px 3px var(--surface-shadow), 0 14px 36px color-mix(in srgb, var(--surface-shadow) 45%, transparent);
-}
-
-.home-night-sky {
-  width: min(1120px, 100%);
-  height: clamp(160px, 23vw, 280px);
-  margin: 0 auto -32px;
-  flex-shrink: 0;
-  background: url("/images/night-sky.webp") center / cover no-repeat;
-  mask-image: linear-gradient(to right, transparent, #000 18%, #000 82%, transparent),
-    linear-gradient(to bottom, transparent, #000 24%, #000 60%, transparent);
-  mask-composite: intersect;
-  opacity: 0.9;
-}
-
-.home-landscape {
   width: 100%;
-  height: clamp(260px, 34vw, 620px);
-  flex-shrink: 0;
-  margin-top: auto;
-  background: url("/images/study-garden.png") center bottom / cover no-repeat;
-  opacity: 0.72;
-  mask-image: linear-gradient(to bottom, transparent, #000 42%, #000 86%, transparent),
-    linear-gradient(to right, transparent, #000 14%, #000 86%, transparent);
-  mask-composite: intersect;
+  max-width: 536px;
+  margin: 0 auto;
+  padding: clamp(72px, 15vh, 140px) 26px 64px;
 }
 
 .home-intro {
@@ -125,68 +140,34 @@ button:focus-visible {
 
 .home-intro h1 {
   color: var(--ink);
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 44px;
+  font-family: "Courier New", monospace;
+  font-size: 25px;
   font-weight: 400;
-  letter-spacing: -0.055em;
-  line-height: 1.15;
+  letter-spacing: -0.05em;
+  line-height: 1.2;
 }
 
 .home-domain {
   color: var(--ink-soft);
-  font-size: 12px;
+  font-family: "Courier New", monospace;
+  font-size: 11px;
 }
 
 .home-copy {
-  color: var(--ink);
-  font-size: 16px;
-  line-height: 1.7;
+  font-size: 15px;
+  line-height: 1.75;
   text-wrap: pretty;
 }
 
-.home-copy p + p {
-  margin-top: 14px;
-}
+.home-copy p + p { margin-top: 14px; }
 
 .inline-link {
-  color: var(--accent-coral);
-  font-weight: 500;
-}
-
-.email-action {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 30px;
-  padding: 0 10px;
-  border: 1px solid color-mix(in srgb, var(--accent) 75%, var(--ink));
-  border-radius: 9px;
-  background: var(--accent);
-  color: var(--accent-foreground);
-  box-shadow: inset 0 1px 0 var(--surface-highlight), 0 2px 2px var(--surface-shadow);
-  font-size: 14px;
+  color: var(--ink);
   font-weight: 600;
-  vertical-align: baseline;
-}
-
-.email-action:hover {
-  background: color-mix(in srgb, var(--accent) 92%, #000);
-  color: var(--accent-foreground);
-}
-
-.email-action:active {
-  box-shadow: inset 0 2px 3px var(--surface-shadow);
-}
-
-/* Keep the portfolio's ripple-only motion preference. */
-@media (pointer: coarse) {
-  .email-action, .home-location .ripple-word { min-height: 44px; }
 }
 
 .home-footer {
   margin-top: 28px;
-  padding-top: 18px;
-  border-top: 1px solid var(--line);
   color: var(--ink-soft);
   font-size: 12px;
 }
@@ -198,13 +179,15 @@ button:focus-visible {
   gap: 0 8px;
 }
 
-.home-location .ripple-word {
-  color: var(--ink-soft);
+.home-location .ripple-word { color: var(--ink-soft); }
+
+@media (pointer: coarse) {
+  .home-location .ripple-word { min-height: 44px; }
 }
 
-@media (max-width: 600px) {
-  .home-content { width: calc(100% - 28px); padding: 24px 22px; }
-  .home-landscape { background-position: 55% bottom; }
+@media (max-width: 800px) {
+  .big-dipper { top: auto; bottom: 32px; left: auto; right: 16px; width: 260px; height: 160px; opacity: 0.18; }
+  .home-content { padding-top: 64px; padding-bottom: 220px; }
 }
 
 /* ── blog post MDX content ── */

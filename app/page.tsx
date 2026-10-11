@@ -9,13 +9,15 @@ function InlineLink({
   href: string;
   children: ReactNode;
 }) {
-  return <a className={href.startsWith("mailto:") ? "inline-link email-action" : "inline-link"} href={href}>{children}</a>;
+  return <a className="inline-link" href={href}>{children}</a>;
 }
 
 export default function Home() {
   return (
     <main className="home-shell">
-      <div className="home-night-sky" aria-hidden="true" />
+      <div className="big-dipper" aria-hidden="true">
+        {Array.from({ length: 7 }, (_, index) => <span key={index} />)}
+      </div>
       <article className="home-content">
         <header className="home-intro">
           <h1>harsh.</h1>
@@ -61,7 +63,6 @@ export default function Home() {
           </div>
         </footer>
       </article>
-      <div className="home-landscape" aria-hidden="true" />
     </main>
   );
 }

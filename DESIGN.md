@@ -1,3 +1,15 @@
+# Portfolio direction (current)
+
+The latest portfolio direction overrides conflicting Lumee rules below:
+- Black and white only; plain HTML/CSS feel, compact text and no panels.
+- No photos, illustrations, orange actions, or decorative controls.
+- Static, very faint stars and a CSS Big Dipper in the background.
+- Ripple is the only animation. Respect reduced motion.
+- Keep work experience, Lumee, short paragraphs, and Toronto local time.
+- Links have no underlines; keep visible keyboard focus.
+
+---
+
 # Lumee design rules
 
 ## Direction

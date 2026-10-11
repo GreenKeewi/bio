@@ -1,9 +1,0 @@
-{
-  "$schema": "https://openapi.vercel.sh/vercel.json",
-  "rewrites": [
-    {
-      "source": "/images/study-garden.png",
-      "destination": "https://lumee.harshs.dev/illustrations/landing/study-garden.png"
-    }
-  ]
-}
