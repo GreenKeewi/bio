@@ -1,16 +1,16 @@
 @import "tailwindcss";
 
 :root {
-  color-scheme: light;
-  --bg-base: #faf9f6;
-  --plate: #f0ede7;
-  --ink: #35332f;
-  --ink-soft: #777269;
-  --accent-blue: #365e83;
-  --accent-coral: #b4482b;
-  --accent-green: #426326;
-  --accent-purple: #705277;
-  --line: rgba(67, 91, 52, 0.16);
+  color-scheme: dark;
+  --bg-base: #2b2a26;
+  --plate: #35342e;
+  --ink: #f1eade;
+  --ink-soft: #b8b1a5;
+  --accent-blue: #bdd0df;
+  --accent-coral: #e0b59a;
+  --accent-green: #cad2ac;
+  --accent-purple: #d0c1e3;
+  --line: rgba(225, 216, 195, 0.15);
   --ink-dim: color-mix(in srgb, var(--ink) 90%, transparent);
 }
 
@@ -67,12 +67,29 @@ button:focus-visible {
   outline-offset: 4px;
 }
 
-/* Compact text, a warm neutral page, and one quiet accent. */
+/* A quiet page with a landscape anchored beneath the text. */
 .home-shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100svh;
   width: 100%;
-  max-width: 532px;
+}
+
+.home-content {
+  width: 100%;
+  max-width: 544px;
   margin: 0 auto;
-  padding: clamp(64px, 15vh, 144px) 26px 48px;
+  padding: clamp(56px, 9vh, 96px) 26px 32px;
+}
+
+.home-landscape {
+  width: 100%;
+  height: clamp(260px, 34vw, 620px);
+  flex-shrink: 0;
+  margin-top: auto;
+  background: url("https://lumee.harshs.dev/illustrations/landing/study-garden.png") center bottom / cover no-repeat;
+  opacity: 0.72;
+  mask-image: linear-gradient(to bottom, transparent, #000 46%);
 }
 
 .home-intro {
@@ -86,7 +103,7 @@ button:focus-visible {
 .home-intro h1 {
   color: var(--ink);
   font-family: Georgia, "Times New Roman", serif;
-  font-size: 38px;
+  font-size: 44px;
   font-weight: 400;
   letter-spacing: -0.055em;
   line-height: 1.15;
@@ -113,6 +130,8 @@ button:focus-visible {
 
 .home-footer {
   margin-top: 28px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
   color: var(--ink-soft);
   font-size: 12px;
 }
@@ -129,7 +148,8 @@ button:focus-visible {
 }
 
 @media (max-width: 600px) {
-  .home-shell { padding-top: 64px; }
+  .home-content { padding-top: 48px; padding-bottom: 24px; }
+  .home-landscape { background-position: 55% bottom; }
 }
 
 /* ── blog post MDX content ── */
