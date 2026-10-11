@@ -9,7 +9,7 @@ function InlineLink({
   href: string;
   children: ReactNode;
 }) {
-  return <a className="inline-link" href={href}>{children}</a>;
+  return <a className={href.startsWith("mailto:") ? "inline-link email-action" : "inline-link"} href={href}>{children}</a>;
 }
 
 export default function Home() {
