@@ -25,7 +25,7 @@ function InlineLink({
     <a className={`inline-link${icon ? " has-icon" : ""}`} href={href}>
       {children}
       {icon && (
-        <span className="link-icon" aria-hidden="true">
+        <span className={`link-icon icon-${icon}`} aria-hidden="true">
           <Image src={`/link-icons/${icon}.svg`} width={24} height={24} alt="" unoptimized />
         </span>
       )}
