@@ -22,7 +22,7 @@ export function Pre({ children }: { children?: ReactNode }) {
   }
 
   return (
-    <pre className="my-5 overflow-x-auto rounded-md border border-[var(--line)] bg-[#1a1a1c] p-4 text-[12.5px] leading-relaxed">
+    <pre className="my-5 overflow-x-auto rounded-md border border-[var(--line)] bg-[var(--plate)] p-4 text-[12.5px] leading-relaxed">
       {children}
     </pre>
   );

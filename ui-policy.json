@@ -1,0 +1,24 @@
+{
+  "fonts": ["Lora", "Georgia", "serif", "ui-monospace", "SFMono-Regular", "Menlo", "Monaco", "Consolas", "Liberation Mono", "Courier New", "monospace"],
+  "fontSizes": [12, 12.5, 13, 14, 15, 16, 17, 18, 20, 24, 30],
+  "typeRules": [
+    { "selector": ".home-content h1", "sizes": [16, 17] },
+    { "selector": ".blog-page h1", "sizes": [20, 24, 30] },
+    { "selector": ".blog-page h2", "sizes": [15, 18.48, 19.8] },
+    { "selector": ".prose-blog h3", "sizes": [14.84, 15.9] },
+    { "selector": ".home-location button", "sizes": [12] }
+  ],
+  "minControlSize": 24,
+  "controlSizeRules": [],
+  "minControlGap": 8,
+  "minControlInset": 8,
+  "controlContainers": ["[data-ui-container]"],
+  "minLayoutGap": 8,
+  "bannedCopy": ["unlock your potential", "seamlessly", "game-changing"],
+  "viewports": [{"width": 390, "height": 844}, {"width": 1440, "height": 900}],
+  "colorSchemes": ["light"],
+  "exceptions": [
+    { "selector": ".katex, .katex *", "rules": ["font-family", "font-size"], "reason": "KaTeX uses its bundled mathematical fonts and proportional glyph sizes to typeset equations." },
+    { "selector": ".katex-html .mbin, .katex-html .base > .mord:not(.mathnormal):not(:has(*)), .katex-html .rlap .mrel", "rules": ["text-contrast"], "reason": "Axe cannot measure non-text mathematical symbols (intersection, empty set, forall, and KaTeX's private not-equal stroke). Their approved dark brown ink on cream paper is verified separately by check-ui.mjs above 4.5:1; prose and mathematical letter contrast remain checked." }
+  ]
+}

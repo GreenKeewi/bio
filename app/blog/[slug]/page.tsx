@@ -1,5 +1,6 @@
 import "katex/dist/katex.min.css";
 import Link from "next/link";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
@@ -7,6 +8,22 @@ import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
 import { Pre } from "../../components/MdxCodeBlock";
 import { getAllPosts, getPostBySlug } from "../lib";
+import { PROFILE, SITE_URL } from "../../profile";
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const post = getPostBySlug(slug);
+  if (!post) notFound();
+  const { title, excerpt, date } = post.frontmatter;
+  const url = `${SITE_URL}/blog/${slug}`;
+  return {
+    title,
+    description: excerpt,
+    alternates: { canonical: url },
+    openGraph: { title, description: excerpt, url, type: "article", publishedTime: date, authors: [SITE_URL] },
+    twitter: { card: "summary", title, description: excerpt },
+  };
+}
 
 export function generateStaticParams() {
   return getAllPosts().map((post) => ({ slug: post.slug }));
@@ -22,9 +39,20 @@ export default async function BlogPost({
   if (!post) notFound();
 
   const { frontmatter, content } = post;
+  const article = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: frontmatter.title,
+    description: frontmatter.excerpt,
+    datePublished: frontmatter.date,
+    url: `${SITE_URL}/blog/${slug}`,
+    mainEntityOfPage: `${SITE_URL}/blog/${slug}`,
+    author: { "@type": "Person", "@id": `${SITE_URL}/#harsh`, name: PROFILE.name, url: SITE_URL },
+  };
 
   return (
     <main className="mx-auto flex min-h-full w-full max-w-[560px] flex-col px-5 py-16 sm:px-8">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(article).replace(/</g, "\\u003c") }} />
       <Link href="/blog" className="text-sm text-[var(--ink-soft)]">
         All writing
       </Link>

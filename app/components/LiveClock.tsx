@@ -24,7 +24,7 @@ export default function LiveClock() {
   }, []);
 
   return (
-    <span className="tabular-nums" aria-label={time ? `Time in Toronto: ${time}` : "Toronto local time"}>
+    <span className="tabular-nums" data-ui-number role="timer" aria-live="off" aria-label={time ? `Time in Toronto: ${time}` : "Toronto local time"}>
       {time ?? "Local time"}
     </span>
   );

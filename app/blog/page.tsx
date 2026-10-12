@@ -1,5 +1,15 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import { getAllPosts } from "./lib";
+import { SITE_URL } from "../profile";
+
+export const metadata: Metadata = {
+  title: "Writing",
+  description: "Notes by Harsh on building websites, working at startups, and shipping projects.",
+  alternates: { canonical: `${SITE_URL}/blog` },
+  openGraph: { title: "Writing | Harsh", description: "Notes on building websites, startups, and shipping projects.", url: `${SITE_URL}/blog`, type: "website" },
+  twitter: { card: "summary", title: "Writing | Harsh", description: "Notes on building websites, startups, and shipping projects." },
+};
 
 export default function BlogIndex() {
   const posts = getAllPosts();

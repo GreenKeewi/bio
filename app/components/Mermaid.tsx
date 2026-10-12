@@ -7,17 +7,20 @@ let initialized = false;
 
 function ensureInit() {
   if (initialized) return;
+  const theme = getComputedStyle(document.documentElement);
+  const color = (token: string) => theme.getPropertyValue(token).trim();
   mermaid.initialize({
     startOnLoad: false,
-    theme: "dark",
+    theme: "base",
+    fontFamily: "Lora, Georgia, serif",
     themeVariables: {
-      background: "#1e1e1e",
-      primaryColor: "#232326",
-      primaryTextColor: "#ededec",
-      primaryBorderColor: "rgba(237,237,236,0.2)",
-      lineColor: "rgba(237,237,236,0.4)",
-      secondaryColor: "#2a2a2a",
-      tertiaryColor: "#232326",
+      background: color("--plate"),
+      primaryColor: color("--bg-base"),
+      primaryTextColor: color("--ink"),
+      primaryBorderColor: color("--line"),
+      lineColor: color("--ink-soft"),
+      secondaryColor: color("--plate"),
+      tertiaryColor: color("--plate"),
       fontSize: "13px",
     },
   });
@@ -50,7 +53,7 @@ export default function Mermaid({ chart }: { chart: string }) {
   return (
     <div
       ref={ref}
-      className="my-5 flex justify-center overflow-x-auto rounded-md border border-[var(--line)] bg-[#1a1a1c] p-4"
+      className="mermaid-diagram my-5 flex justify-center overflow-x-auto rounded-md border border-[var(--line)] bg-[var(--plate)] p-4"
       dangerouslySetInnerHTML={{ __html: svg }}
     />
   );
