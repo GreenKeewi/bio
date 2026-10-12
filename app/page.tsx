@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import type { Metadata } from "next";
+import Image from "next/image";
 import AsciiRedPanda from "./components/AsciiRedPanda";
 import LiveClock from "./components/LiveClock";
 import { RippleWord } from "./components/PixelRipple";
@@ -41,6 +42,7 @@ export default function Home() {
       "@type": "Person",
       "@id": `${SITE_URL}/#harsh`,
       name: PROFILE.name,
+      image: `${SITE_URL}/portrait.png`,
       alternateName: ["GreenKeewi", "harshTalksAI"],
       url: SITE_URL,
       description: PROFILE.description,
@@ -53,6 +55,9 @@ export default function Home() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(profile).replace(/</g, "\\u003c") }} />
       <main id="main-content" className="home-stage">
         <article className="home-content" aria-label="About Harsh" data-ui-content data-ui-stack>
+          <div className="home-portrait">
+            <Image src="/portrait.png" alt="Portrait of Harsh" width={72} height={72} loading="eager" unoptimized />
+          </div>
           <h1>hey, i&apos;m harsh. i build websites and apps.</h1>
           <p>i&apos;m {PROFILE.age}, based in Toronto, and i&apos;ve been coding since i was 9.</p>
           <p>
