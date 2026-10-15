@@ -1,8 +1,7 @@
 {
-  "fonts": ["Lora", "Georgia", "serif", "ui-monospace", "SFMono-Regular", "Menlo", "Monaco", "Consolas", "Liberation Mono", "Courier New", "monospace"],
+  "fonts": ["Inter", "Arial", "sans-serif", "ui-monospace", "SFMono-Regular", "Menlo", "Monaco", "Consolas", "Liberation Mono", "Courier New", "monospace"],
   "fontSizes": [12, 12.5, 13, 14, 15, 16, 17, 18, 20, 24, 30],
   "typeRules": [
-    { "selector": ".home-inspo", "sizes": [10] },
     { "selector": ".home-content h1", "sizes": [16, 17] },
     { "selector": ".blog-page h1", "sizes": [20, 24, 30] },
     { "selector": ".blog-page h2", "sizes": [15, 18.48, 19.8] },

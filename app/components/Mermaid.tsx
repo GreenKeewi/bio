@@ -12,7 +12,7 @@ function ensureInit() {
   mermaid.initialize({
     startOnLoad: false,
     theme: "base",
-    fontFamily: "Lora, Georgia, serif",
+    fontFamily: "Inter, Arial, sans-serif",
     themeVariables: {
       background: color("--plate"),
       primaryColor: color("--bg-base"),

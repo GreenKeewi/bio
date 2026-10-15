@@ -92,15 +92,10 @@ export default function Home() {
             <a key={link.name} href={link.href}>{link.name}</a>
           ))}
         </nav>
-        <div className="home-footer-meta">
-          <div className="home-location">
-            <RippleWord>Toronto, Canada</RippleWord>
-            <span aria-hidden="true">·</span>
-            <LiveClock />
-          </div>
-          <div className="home-credits">
-            <p className="home-inspo">inspo from andrewcai.com</p>
-          </div>
+        <div className="home-location">
+          <RippleWord>Toronto, Canada</RippleWord>
+          <span aria-hidden="true">·</span>
+          <LiveClock />
         </div>
       </footer>
     </div>

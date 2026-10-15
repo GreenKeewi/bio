@@ -5,7 +5,7 @@ Personal website at https://harshs.dev, built with Next.js (App Router) and Tail
 ## Features
 
 - Short bio, work experience, project links, and contact links
-- Text-first layout inspired by andrewcai.com, with a red-panda cream/brown/rust palette, self-hosted Lora serif typography, and a bottom social footer
+- Text-first layout with a barely tinted off-white background, brown/rust palette, self-hosted Inter typography, and a single-row social/location footer
 - Animated coloured ASCII red panda, converted from an original high-resolution image, with no playback button, reduced-motion support, and a static fallback
 - Compact mobile footer; ASCII artwork and its downloads are disabled on phones
 - Crawlable HTML, canonical page metadata, ProfilePage/Person and BlogPosting structured data, a generated sitemap, and `llms.txt`

@@ -27,7 +27,7 @@ try {
   assert.ok(mathColors.length, "The math route must render its equations.");
   for (const colors of mathColors) {
     assert.equal(colors.ink, "rgb(57, 40, 32)", "Math symbols must use the approved chocolate ink.");
-    assert.equal(colors.paper, "rgb(251, 245, 235)", "Math symbols must use the cream page background (12.92:1 contrast).");
+    assert.equal(colors.paper, "rgb(253, 252, 249)", "Math symbols must use the near-white page background.");
   }
   await mathPage.close();
   for (const viewport of policy.viewports) {

@@ -1,16 +1,16 @@
 @import "tailwindcss";
 
 @font-face {
-  font-family: "Lora";
-  src: url("/fonts/lora-variable.ttf") format("truetype");
-  font-weight: 400 700;
+  font-family: "Inter";
+  src: url("/fonts/inter-latin-variable.woff2") format("woff2");
+  font-weight: 100 900;
   font-style: normal;
   font-display: swap;
 }
 
 :root {
   color-scheme: light;
-  --bg-base: #fbf5eb;
+  --bg-base: #fdfcf9;
   --plate: #f3e7d8;
   --ink: #392820;
   --ink-dim: #392820;
@@ -26,8 +26,8 @@
 }
 
 @theme inline {
-  --font-sans: "Lora", Georgia, serif;
-  --font-serif: "Lora", Georgia, serif;
+  --font-sans: "Inter", Arial, sans-serif;
+  --font-serif: "Inter", Arial, sans-serif;
 }
 
 html,
@@ -41,7 +41,7 @@ html {
 
 body {
   color: var(--ink);
-  font-family: "Lora", Georgia, serif;
+  font-family: "Inter", Arial, sans-serif;
   font-size: 17px;
   line-height: 1.6;
   background: var(--bg-base);
@@ -189,9 +189,8 @@ button:focus-visible {
 }
 
 .home-footer {
-  display: grid;
+  display: flex;
   flex-shrink: 0;
-  grid-template-columns: 1fr auto;
   align-items: center;
   justify-content: space-between;
   gap: 20px;
@@ -203,7 +202,6 @@ button:focus-visible {
 
 .home-socials {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
   gap: 4px 20px;
 }
@@ -221,19 +219,13 @@ button:focus-visible {
   color: var(--accent);
 }
 
-.home-footer-meta {
-  display: grid;
-  gap: 4px;
-  text-align: right;
-  font-size: 12px;
-}
-
 .home-location {
   display: flex;
   align-items: center;
   justify-content: flex-end;
   gap: 0 8px;
   white-space: nowrap;
+  font-size: 12px;
 }
 
 .home-location .ripple-word {
@@ -244,11 +236,6 @@ button:focus-visible {
 .home-location [role="timer"] {
   min-width: 0;
   text-align: left;
-}
-
-.home-inspo {
-  font-size: 10px;
-  line-height: 1.5;
 }
 
 @media (max-width: 768px) {
@@ -270,27 +257,14 @@ button:focus-visible {
   }
 
   .home-footer {
-    grid-template-columns: 1fr;
-    gap: 12px;
+    gap: 8px;
+    font-size: 12px;
     padding-top: 16px;
     padding-bottom: 24px;
   }
 
   .home-socials {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 0 16px;
-  }
-
-  .home-socials a {
-    min-width: 44px;
-    width: fit-content;
-  }
-
-  .home-footer-meta {
-    grid-template-columns: 1fr auto;
-    align-items: center;
-    gap: 12px;
+    gap: 8px;
   }
 
   .home-location {
@@ -314,23 +288,8 @@ button:focus-visible {
     font-size: 16px;
   }
 
-  .home-footer-meta {
-    text-align: left;
-  }
-
-  .home-credits {
-    text-align: right;
-  }
-}
-
-@media (max-width: 360px) {
-  .home-footer-meta {
-    grid-template-columns: 1fr;
-    gap: 4px;
-  }
-
-  .home-credits {
-    text-align: left;
+  .home-footer {
+    margin-inline: clamp(8px, calc(50vw - 152px), 24px);
   }
 }
 
@@ -362,14 +321,6 @@ button:focus-visible {
   .home-footer {
     gap: 8px;
     padding-block: 8px 12px;
-  }
-
-  .home-credits {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: baseline;
-    gap: 0 12px;
   }
 }
 
