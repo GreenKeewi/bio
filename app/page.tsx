@@ -99,7 +99,6 @@ export default function Home() {
             <LiveClock />
           </div>
           <div className="home-credits">
-            <p className="home-credit">© {new Date().getFullYear()} harsh</p>
             <p className="home-inspo">inspo from andrewcai.com</p>
           </div>
         </div>
