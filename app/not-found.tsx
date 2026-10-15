@@ -82,11 +82,11 @@ export default function NotFound() {
     <main id="main-content" className={styles.page}>
       <h1 className="sr-only">Page not found</h1>
       <div className={styles.scene}>
-        <p className={styles.code} aria-label="Error 404">404</p>
-        <TiredAsterisk />
         <p className={styles.message}>
           this page isnt a thing, <Link href="/">go home</Link>
         </p>
+        <TiredAsterisk />
+        <p className={styles.code} aria-label="Error 404">404</p>
       </div>
     </main>
   );
