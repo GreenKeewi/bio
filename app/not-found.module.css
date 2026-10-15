@@ -1,0 +1,96 @@
+.page {
+  display: grid;
+  flex: 1;
+  min-height: 100svh;
+  place-items: center;
+  padding: 32px 24px;
+}
+
+.scene {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 440px;
+}
+
+.code {
+  color: var(--ink-soft);
+  font-size: 12px;
+  letter-spacing: .18em;
+}
+
+.character {
+  display: block;
+  width: min(300px, 100%, 50svh);
+  height: auto;
+  margin: 20px 0 24px;
+  overflow: visible;
+}
+
+.eyes {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: blink 12s infinite;
+}
+
+.message {
+  position: relative;
+  isolation: isolate;
+  max-width: 100%;
+  border-radius: 22px;
+  background: #ededee;
+  padding: 12px 20px;
+  color: #262628;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.message::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  bottom: 0;
+  left: -7px;
+  width: 22px;
+  height: 20px;
+  border-bottom-right-radius: 16px;
+  background: inherit;
+}
+
+.message::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: -12px;
+  width: 12px;
+  height: 22px;
+  border-bottom-right-radius: 12px;
+  background: var(--bg-base);
+}
+
+.message a {
+  display: inline-block;
+  color: #004cff;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.message a:hover {
+  text-decoration: underline;
+}
+
+.message a:focus-visible {
+  outline-color: #004cff;
+}
+
+@keyframes blink {
+  0%, 91%, 94%, 100% { transform: scaleY(1); }
+  92%, 93% { transform: scaleY(.08); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .eyes {
+    animation: none;
+  }
+}

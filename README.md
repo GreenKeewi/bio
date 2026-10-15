@@ -10,6 +10,7 @@ Personal website at https://harshs.dev, built with Next.js (App Router) and Tail
 - Compact mobile footer; ASCII artwork and its downloads are disabled on phones
 - Crawlable HTML, canonical page metadata, ProfilePage/Person and BlogPosting structured data, a generated sitemap, and `llms.txt`
 - Live local time in Toronto, Canada, using the America/Toronto time zone
+- Custom 404 with a sleepy 3D asterisk, a message bubble, and a blue home link
 - Blog at `/blog`, written in MDX with GitHub-flavored markdown, LaTeX (via `remark-math`/`rehype-katex`), and Mermaid diagram support
 - A pixel ripple on the location text
 
