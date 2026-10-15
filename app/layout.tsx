@@ -5,7 +5,7 @@ import { PROFILE, SITE_URL } from "./profile";
 const TITLE = "Harsh — developer and builder in Toronto";
 
 export const metadata: Metadata = {
-  title: { default: TITLE, template: "%s | Harsh" },
+  title: { default: "harsh", template: "%s | harsh" },
   description: PROFILE.description,
   metadataBase: new URL(SITE_URL),
   authors: [{ name: PROFILE.name, url: SITE_URL }],
