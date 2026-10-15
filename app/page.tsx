@@ -19,9 +19,6 @@ const PROJECTS = [
 const SOCIAL_LINKS = [
   { name: "x", href: "https://x.com/harshTalksAI" },
   { name: "github", href: "https://github.com/GreenKeewi" },
-  { name: "youtube", href: "https://www.youtube.com/channel/UCUSQ134t1G9XRf3x9oY-1wQ" },
-  { name: "instagram", href: "https://www.instagram.com/harshtalksai/" },
-  { name: "devpost", href: "https://devpost.com/GreenKeewi" },
   { name: "blog", href: "/blog" },
 ];
 
@@ -101,7 +98,10 @@ export default function Home() {
             <span aria-hidden="true">·</span>
             <LiveClock />
           </div>
-          <p className="home-credit">© {new Date().getFullYear()} harsh</p>
+          <div className="home-credits">
+            <p className="home-credit">© {new Date().getFullYear()} harsh</p>
+            <p className="home-inspo">inspo from andrewcai.com</p>
+          </div>
         </div>
       </footer>
     </div>
