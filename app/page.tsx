@@ -14,6 +14,11 @@ const PROJECTS = [
   { name: "Lumee", href: "https://lumee.harshs.dev" },
   { name: "Solin", href: "https://heysolin.com" },
   { name: "Fable", href: "https://usefable.ca" },
+  {
+    name: "i need investors",
+    href: "https://ineedinvestors.vercel.app/",
+    description: "i got tired of digging through OpenVC and investor spreadsheets, so i built a database of 15k investors for startups across stages and sectors. filter by check size, export to CSV, or connect your AI agent with MCP.",
+  },
 ];
 
 const SOCIAL_LINKS = [
@@ -73,6 +78,7 @@ export default function Home() {
               {PROJECTS.map((project) => (
                 <li key={project.name}>
                   <InlineLink href={project.href}>{project.name}</InlineLink>
+                  {project.description && <> — {project.description}</>}
                 </li>
               ))}
             </ul>
