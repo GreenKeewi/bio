@@ -23,6 +23,13 @@
   --accent-purple: var(--accent);
   --line: #dfcbb4;
   --page-gutter: clamp(24px, 4vw, 60px);
+  /* transitions.dev tooltip: a quiet, delayed entrance and quick exit. */
+  --tt-in-dur: 150ms;
+  --tt-out-dur: 50ms;
+  --tt-scale: 0.98;
+  --tt-delay: 80ms;
+  --tt-in-ease: ease-out;
+  --tt-out-ease: ease-out;
 }
 
 @theme inline {
@@ -150,6 +157,92 @@ button:focus-visible {
   position: absolute;
   left: 4px;
   color: var(--ink-soft);
+}
+
+.project-details {
+  position: relative;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.project-details-trigger {
+  min-height: 24px;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: var(--ink-soft);
+  font: inherit;
+  font-size: 12px;
+  cursor: help;
+  text-decoration: underline dotted;
+  text-underline-offset: 3px;
+}
+
+.project-tap-label {
+  display: none;
+}
+
+/* The transparent bottom padding bridges the pointer's path into the tooltip. */
+.project-details-popover {
+  position: absolute;
+  z-index: 10;
+  bottom: 100%;
+  left: 0;
+  width: min(320px, calc(100vw - 80px));
+  padding-bottom: 8px;
+  visibility: hidden;
+  opacity: 0;
+  transform: scale(var(--tt-scale));
+  transform-origin: left bottom;
+  pointer-events: none;
+  transition:
+    opacity var(--tt-out-dur) var(--tt-out-ease),
+    transform var(--tt-out-dur) var(--tt-out-ease),
+    visibility 0s linear var(--tt-out-dur);
+}
+
+.project-details-paper {
+  display: block;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 12px 16px;
+  background: var(--bg-base);
+  color: var(--ink);
+  font-size: 14px;
+  line-height: 1.6;
+  box-shadow: 0 4px 24px color-mix(in srgb, var(--ink) 10%, transparent);
+}
+
+.project-details[data-open="true"] .t-tt {
+  visibility: visible;
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+  transition-duration: var(--tt-in-dur), var(--tt-in-dur), 0s;
+  transition-timing-function: var(--tt-in-ease);
+  transition-delay: var(--tt-delay);
+}
+
+@media (hover: none), (pointer: coarse) {
+  .project-hover-label {
+    display: none;
+  }
+
+  .project-tap-label {
+    display: inline;
+  }
+
+  .project-details-trigger {
+    min-height: 44px;
+    cursor: pointer;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-details .t-tt {
+    transition: none;
+  }
 }
 
 .home-art {

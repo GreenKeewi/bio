@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import AsciiRedPanda from "./components/AsciiRedPanda";
 import LiveClock from "./components/LiveClock";
+import ProjectDetails from "./components/ProjectDetails";
 import { RippleWord } from "./components/PixelRipple";
 import { PROFILE, SITE_URL } from "./profile";
 
@@ -77,8 +78,11 @@ export default function Home() {
             <ul>
               {PROJECTS.map((project) => (
                 <li key={project.name}>
-                  <InlineLink href={project.href}>{project.name}</InlineLink>
-                  {project.description && <> — {project.description}</>}
+                  {project.description ? (
+                    <ProjectDetails name={project.name} href={project.href} description={project.description} />
+                  ) : (
+                    <InlineLink href={project.href}>{project.name}</InlineLink>
+                  )}
                 </li>
               ))}
             </ul>
