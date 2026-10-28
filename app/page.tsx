@@ -38,7 +38,7 @@ export default function Home() {
     "@type": "ProfilePage",
     "@id": `${SITE_URL}/#profile`,
     url: SITE_URL,
-    name: "Harsh — developer and builder in Toronto",
+    name: PROFILE.title,
     description: PROFILE.description,
     mentions: PROJECTS.map((project) => ({ "@type": "WebSite", name: project.name, url: project.href })),
     mainEntity: {
@@ -57,23 +57,23 @@ export default function Home() {
     <div className="home-shell">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(profile).replace(/</g, "\\u003c") }} />
       <main id="main-content" className="home-stage">
-        <article className="home-content" aria-label="About Harsh" data-ui-content data-ui-stack>
+        <article className="home-content" aria-label="about me" data-ui-content data-ui-stack>
           <div className="home-portrait">
-            <Image src="/portrait.png" alt="Portrait of Harsh" width={72} height={72} loading="eager" unoptimized />
+            <Image src="/portrait.png" alt="a photo of me" width={72} height={72} loading="eager" unoptimized />
           </div>
-          <h1>hey, i&apos;m harsh. i build websites and apps.</h1>
+          <h1>{PROFILE.title}</h1>
           <p>i&apos;m {PROFILE.age}, based in Toronto, and i&apos;ve been coding since i was 9.</p>
           <p>
-            currently a GTM intern at{" "}
+            i&apos;m currently a GTM intern at{" "}
             <InlineLink href="https://x.com/dreamworkhq">Dreamwork</InlineLink>.
           </p>
           <p>
-            before: worked with{" "}
+            before that, i worked with{" "}
             <InlineLink href="https://x.com/homedepot">@homedepot</InlineLink> and{" "}
             <InlineLink href="https://x.com/neeonline">@neeonline</InlineLink>.
           </p>
 
-          <section className="home-projects" aria-label="Projects">
+          <section className="home-projects" aria-label="my projects">
             <p>things i&apos;ve built:</p>
             <ul>
               {PROJECTS.map((project) => (
@@ -88,9 +88,9 @@ export default function Home() {
             </ul>
           </section>
 
-          <p>have an idea? say hi.</p>
+          <p>have an idea? i&apos;d love to hear it.</p>
           <p>
-            reach out: <span className="home-email">harshithseeta[@]gmail[.]com</span>
+            email me: <span className="home-email">harshithseeta[@]gmail[.]com</span>
           </p>
         </article>
         <AsciiRedPanda />

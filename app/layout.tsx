@@ -1,30 +1,30 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { PROFILE, SITE_URL } from "./profile";
-
-const TITLE = "Harsh — developer and builder in Toronto";
+import { OG_IMAGE, PROFILE, SITE_URL } from "./profile";
 
 export const metadata: Metadata = {
-  title: { default: "harsh", template: "%s | harsh" },
+  title: { default: PROFILE.title, template: "%s | harsh" },
   description: PROFILE.description,
   metadataBase: new URL(SITE_URL),
   authors: [{ name: PROFILE.name, url: SITE_URL }],
   creator: PROFILE.name,
   robots: { index: true, follow: true, googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 } },
   openGraph: {
-    title: TITLE,
+    title: PROFILE.title,
     description: PROFILE.description,
     siteName: "Harsh",
     url: SITE_URL,
     locale: "en_CA",
     type: "profile",
+    images: [OG_IMAGE],
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     site: "@harshTalksAI",
     creator: "@harshTalksAI",
-    title: TITLE,
+    title: PROFILE.title,
     description: PROFILE.description,
+    images: [OG_IMAGE],
   },
 };
 

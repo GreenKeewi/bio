@@ -8,7 +8,7 @@ import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
 import { Pre } from "../../components/MdxCodeBlock";
 import { getAllPosts, getPostBySlug } from "../lib";
-import { PROFILE, SITE_URL } from "../../profile";
+import { OG_IMAGE, PROFILE, SITE_URL } from "../../profile";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
@@ -20,8 +20,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     title,
     description: excerpt,
     alternates: { canonical: url },
-    openGraph: { title, description: excerpt, url, type: "article", publishedTime: date, authors: [SITE_URL] },
-    twitter: { card: "summary", title, description: excerpt },
+    openGraph: { title, description: excerpt, url, type: "article", publishedTime: date, authors: [SITE_URL], images: [OG_IMAGE] },
+    twitter: { card: "summary_large_image", title, description: excerpt, images: [OG_IMAGE] },
   };
 }
 

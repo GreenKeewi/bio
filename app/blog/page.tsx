@@ -1,14 +1,17 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { getAllPosts } from "./lib";
-import { SITE_URL } from "../profile";
+import { OG_IMAGE, SITE_URL } from "../profile";
+
+const TITLE = "my writing";
+const DESCRIPTION = "i write about the websites and apps i'm building, what i'm learning at startups, and how i work.";
 
 export const metadata: Metadata = {
-  title: "Writing",
-  description: "Notes by Harsh on building websites, working at startups, and shipping projects.",
+  title: TITLE,
+  description: DESCRIPTION,
   alternates: { canonical: `${SITE_URL}/blog` },
-  openGraph: { title: "Writing | Harsh", description: "Notes on building websites, startups, and shipping projects.", url: `${SITE_URL}/blog`, type: "website" },
-  twitter: { card: "summary", title: "Writing | Harsh", description: "Notes on building websites, startups, and shipping projects." },
+  openGraph: { title: `${TITLE} | harsh`, description: DESCRIPTION, url: `${SITE_URL}/blog`, type: "website", images: [OG_IMAGE] },
+  twitter: { card: "summary_large_image", title: `${TITLE} | harsh`, description: DESCRIPTION, images: [OG_IMAGE] },
 };
 
 export default function BlogIndex() {
@@ -20,7 +23,7 @@ export default function BlogIndex() {
         Home
       </Link>
 
-      <h1 className="mt-8 text-xl font-medium text-[var(--ink)]">Writing</h1>
+      <h1 className="mt-8 text-xl font-medium text-[var(--ink)]">{TITLE}</h1>
       <div className="mt-4">
         {posts.map((post, i) => (
           <Link

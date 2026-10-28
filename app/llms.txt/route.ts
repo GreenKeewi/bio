@@ -9,22 +9,23 @@ export function GET() {
 
 > ${PROFILE.description}
 
-This is Harsh's personal website and portfolio. Harsh also uses the handles GreenKeewi and harshTalksAI. The profile is the primary source for current bio and project information.
+this is my personal website. i also go by GreenKeewi and harshTalksAI. this is where i keep my bio, projects, and writing.
 
-Harsh has coded since age 9, is based in Toronto, Canada, and has worked with @homedepot and @neeonline. Contact is deliberately displayed as harshithseeta[@]gmail[.]com; there is no email link.
+i've been coding since i was 9, and i've worked with @homedepot and @neeonline. you can reach me at harshithseeta[@]gmail[.]com.
 
 ## Profile
 
-- [About Harsh](${SITE_URL}/): Bio, work experience, projects, contact, and official social profiles.
-- [GitHub](https://github.com/GreenKeewi): Public code.
-- [X](https://x.com/harshTalksAI): Public updates and direct messages.
-- [Writing](${SITE_URL}/blog): Articles written by Harsh.
+- [About me](${SITE_URL}/): My bio, work, projects, and contact details.
+- [GitHub](https://github.com/GreenKeewi): My code.
+- [X](https://x.com/harshTalksAI): My updates and DMs.
+- [My writing](${SITE_URL}/blog): What I'm building and learning.
 
 ## Projects
 
 - [Lumee](https://lumee.harshs.dev)
 - [Solin](https://heysolin.com)
 - [Fable](https://usefable.ca)
+- [i need investors](https://ineedinvestors.vercel.app/)
 
 ## Articles
 
