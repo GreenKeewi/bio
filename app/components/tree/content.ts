@@ -5,8 +5,25 @@ export type Station = {
   id: string;
   cx: number;
   cy: number;
-  nav: { label: string; to: string; dir: "left" | "right" | "up" | "down" }[];
+  fit: number; // columns that must fit on screen
+  nav: Nav[];
+  phone?: { cx: number; cy: number; fit: number; nav: Nav[] };
 };
+
+type Nav = { label: string; to: string; dir: "left" | "right" | "up" | "down" };
+
+function wrap(text: string, w: number) {
+  const out: string[] = [];
+  let line = "";
+  for (const word of text.split(" ")) {
+    if (line && (line + " " + word).length > w) {
+      out.push(line);
+      line = word;
+    } else line = line ? `${line} ${word}` : word;
+  }
+  if (line) out.push(line);
+  return out;
+}
 
 export type PostLink = { slug: string; title: string; date: string };
 
@@ -37,7 +54,7 @@ export function buildTree(posts: PostLink[]) {
     ],
   };
 
-  const links = hangUnder("links", "start", "LINKS", limbs.links, 31, [
+  const links = hangUnder("links", "links", "LINKS", limbs.links, 31, [
     {
       kind: "links",
       links: [
@@ -67,30 +84,13 @@ export function buildTree(posts: PostLink[]) {
   const writingRows: SignRow[] = [];
   posts.forEach((p, i) => {
     if (i) writingRows.push({ kind: "gap" });
-    writingRows.push({ kind: "item", text: p.title.toLowerCase(), href: `/blog/${p.slug}` });
+    for (const line of wrap(p.title.toLowerCase(), 40)) writingRows.push({ kind: "item", text: line, href: `/blog/${p.slug}` });
     writingRows.push({ kind: "sub", text: p.date.replace(/-/g, ".") });
   });
-  const ww = Math.min(64, Math.max(30, ...posts.map((p) => p.title.length)));
+  const ww = 40;
   const writing = hangUnder("writing", "writing", "WRITING", limbs.writing, ww, writingRows, String(posts.length).padStart(2, "0"), 3);
 
-  const recipes: SignData = {
-    id: "recipes",
-    station: "roots",
-    title: "FAV RECIPES",
-    count: "04",
-    w: 30,
-    hang: 0,
-    x: 262,
-    y: 166,
-    rows: [
-      { kind: "item", text: "gnocchi" },
-      { kind: "item", text: "white sauce rigatoni" },
-      { kind: "item", text: "lasagna" },
-      { kind: "item", text: "tiramisu" },
-    ],
-  };
-
-  const signs = [about, links, built, work, writing, recipes];
+  const signs = [about, links, built, work, writing];
   const mid = (s: SignData) => ({ cx: s.x + (s.w + 4) / 2, cy: s.y + signHeight(s) / 2 - s.hang / 2 });
   const m = (s: SignData) => mid(s);
 
@@ -103,21 +103,32 @@ export function buildTree(posts: PostLink[]) {
         { label: "built", to: "built", dir: "left" },
         { label: "work", to: "work", dir: "right" },
         { label: "writing", to: "writing", dir: "up" },
-        { label: "roots", to: "roots", dir: "down" },
       ],
+      fit: links.x + links.w + 4 - about.x,
+      phone: {
+        ...m(about),
+        fit: about.w + 4,
+        nav: [
+          { label: "built", to: "built", dir: "left" },
+          { label: "work", to: "work", dir: "right" },
+          { label: "writing", to: "writing", dir: "up" },
+          { label: "links", to: "links", dir: "down" },
+        ],
+      },
     },
-    { id: "built", ...m(built), nav: [{ label: "trunk", to: "start", dir: "right" }, { label: "writing", to: "writing", dir: "up" }] },
-    { id: "work", ...m(work), nav: [{ label: "trunk", to: "start", dir: "left" }, { label: "writing", to: "writing", dir: "up" }] },
+    { id: "links", ...m(links), fit: links.w + 4, nav: [{ label: "trunk", to: "start", dir: "up" }, { label: "work", to: "work", dir: "right" }] },
+    { id: "built", ...m(built), fit: built.w + 4, nav: [{ label: "trunk", to: "start", dir: "right" }, { label: "writing", to: "writing", dir: "up" }] },
+    { id: "work", ...m(work), fit: work.w + 4, nav: [{ label: "trunk", to: "start", dir: "left" }, { label: "writing", to: "writing", dir: "up" }] },
     {
       id: "writing",
       ...m(writing),
+      fit: writing.w + 4,
       nav: [
         { label: "built", to: "built", dir: "left" },
         { label: "work", to: "work", dir: "right" },
         { label: "trunk", to: "start", dir: "down" },
       ],
     },
-    { id: "roots", cx: recipes.x + 17, cy: 172, nav: [{ label: "trunk", to: "start", dir: "up" }] },
   ];
   return { signs, stations };
 }

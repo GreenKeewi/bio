@@ -11,5 +11,5 @@ export const OG_IMAGE = {
   url: "/og-image.png",
   width: 1200,
   height: 630,
-  alt: "hey, i'm harsh. i build websites and apps. — harshs.dev, with my ASCII red panda on warm off-white paper.",
+  alt: "harshs.dev — an ASCII withered tree with hanging wooden signs: about, links, built, work and writing.",
 };

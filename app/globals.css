@@ -64,10 +64,12 @@ a:focus-visible, button:focus-visible { outline: 1px dashed var(--wood); outline
 }
 .tree-world {
   position: absolute; left: 0; top: 0;
-  transition: transform 1600ms cubic-bezier(.65, 0, .25, 1);
+  transform-origin: 0 0;
   will-change: transform;
+  opacity: 0;
 }
-.tree-world.is-dragging { transition: none; }
+.tree-world.is-ready { opacity: 1; transition: transform 1600ms cubic-bezier(.65, 0, .25, 1), opacity 300ms ease; }
+.tree-world.is-ready.is-dragging { transition: opacity 300ms ease; }
 .tree-art { margin: 0; font: inherit; line-height: var(--lh); white-space: pre; }
 .tree-art t { color: var(--texture); }
 .tree-art e, .tree-art b { color: var(--bark); font-weight: 400; }
@@ -109,11 +111,10 @@ a:focus-visible, button:focus-visible { outline: 1px dashed var(--wood); outline
 .has-cursor .tree-cursor[data-hot="1"] { width: 18px; height: 18px; left: -9px; top: -9px; border-color: var(--wood); }
 
 @media (max-width: 640px) {
-  .tree-shell { font-size: 11px; }
   .tree-nav { position: fixed; left: 0; right: 0; bottom: 0; display: flex; justify-content: center; gap: 4px; padding: 10px; background: var(--ground); border-top: 1px dashed var(--line); }
   .tree-go { position: static; transform: none; }
 }
-@media (prefers-reduced-motion: reduce) { .tree-world { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .tree-world.is-ready { transition: none; } }
 
 /* blog */
 .page-texture {
