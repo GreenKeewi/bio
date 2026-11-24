@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Texture from "../components/tree/Texture";
 import type { Metadata } from "next";
 import { getAllPosts } from "./lib";
 import { OG_IMAGE, SITE_URL } from "../profile";
@@ -18,13 +19,15 @@ export default function BlogIndex() {
   const posts = getAllPosts();
 
   return (
-    <main className="mx-auto flex min-h-full w-full max-w-[560px] flex-col px-5 py-16 sm:px-8">
+    <main className="mx-auto flex min-h-full w-full max-w-[640px] flex-col px-5 py-16 sm:px-8">
+      <Texture />
       <Link href="/" className="text-sm text-[var(--ink-soft)]">
-        Home
+        {"<- trunk"}
       </Link>
 
-      <h1 className="mt-8 text-xl font-medium text-[var(--ink)]">{TITLE}</h1>
-      <div className="mt-4">
+      <div className="board mt-8 px-6 py-5">
+      <h1 className="text-sm font-semibold tracking-[.08em] text-[var(--ink)]">WRITING <span className="text-[var(--ink-soft)]">{String(posts.length).padStart(2, "0")}</span></h1>
+      <div className="mt-3 border-t border-dashed border-[var(--line)]">
         {posts.map((post, i) => (
           <Link
             key={post.slug}
@@ -40,6 +43,7 @@ export default function BlogIndex() {
             <p className="mt-1.5 text-[13px] leading-relaxed text-[var(--ink-soft)]">{post.excerpt}</p>
           </Link>
         ))}
+      </div>
       </div>
     </main>
   );

@@ -1,5 +1,6 @@
 import "katex/dist/katex.min.css";
 import Link from "next/link";
+import Texture from "../../components/tree/Texture";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
@@ -51,13 +52,15 @@ export default async function BlogPost({
   };
 
   return (
-    <main className="mx-auto flex min-h-full w-full max-w-[560px] flex-col px-5 py-16 sm:px-8">
+    <main className="mx-auto flex min-h-full w-full max-w-[720px] flex-col px-5 py-16 sm:px-8">
+      <Texture />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(article).replace(/</g, "\\u003c") }} />
       <Link href="/blog" className="text-sm text-[var(--ink-soft)]">
-        All writing
+        {"<- writing"}
       </Link>
 
-      <header className="mt-8">
+      <div className="board mt-8 px-6 py-8 sm:px-10">
+      <header>
         <h1 className="text-2xl leading-tight tracking-tight text-[var(--ink)] sm:text-3xl">
           {frontmatter.title}
         </h1>
@@ -75,6 +78,7 @@ export default async function BlogPost({
             },
           }}
         />
+      </div>
       </div>
     </main>
   );

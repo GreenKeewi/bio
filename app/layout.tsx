@@ -1,5 +1,10 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { Geist_Mono } from "next/font/google";
+import Cursor from "./components/tree/Cursor";
+
+const mono = Geist_Mono({ subsets: ["latin"], variable: "--font-geist-mono" });
+const THEME = `try{var t=localStorage.getItem("theme");if(t)document.documentElement.dataset.theme=t}catch(e){}`;
 import { OG_IMAGE, PROFILE, SITE_URL } from "./profile";
 
 export const metadata: Metadata = {
@@ -30,8 +35,14 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className="h-full antialiased">
-      <body className="min-h-full flex flex-col">{children}</body>
+    <html lang="en" className={`h-full antialiased ${mono.variable}`} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME }} />
+      </head>
+      <body className="min-h-full flex flex-col">
+        {children}
+        <Cursor />
+      </body>
     </html>
   );
 }
