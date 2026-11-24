@@ -8,14 +8,14 @@ let initialized = false;
 function ensureInit() {
   if (initialized) return;
   const theme = getComputedStyle(document.documentElement);
-  const color = (token: string) => theme.getPropertyValue(token).trim();
+  const color = (token: string) => theme.getPropertyValue(token).trim() || "#888888";
   mermaid.initialize({
     startOnLoad: false,
     theme: "base",
     fontFamily: "Inter, Arial, sans-serif",
     themeVariables: {
       background: color("--plate"),
-      primaryColor: color("--bg-base"),
+      primaryColor: color("--board"),
       primaryTextColor: color("--ink"),
       primaryBorderColor: color("--line"),
       lineColor: color("--ink-soft"),

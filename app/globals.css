@@ -65,7 +65,6 @@ a:focus-visible, button:focus-visible { outline: 1px dashed var(--wood); outline
 .tree-world {
   position: absolute; left: 0; top: 0;
   transform-origin: 0 0;
-  will-change: transform;
   opacity: 0;
 }
 .tree-world.is-ready { opacity: 1; transition: transform 1600ms cubic-bezier(.65, 0, .25, 1), opacity 300ms ease; }

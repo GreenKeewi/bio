@@ -27,8 +27,10 @@ export default function TreeWorld({ html, signs, stations }: { html: string; sig
   const base = stations.find((s) => s.id === at) ?? stations[0];
   const st = phone && base.phone ? { ...base, ...base.phone } : base;
 
-  const font = phone ? 11 : 15;
-  const scale = phone ? Math.min(1.3, (vw - 24) / (st.fit * CW * font)) : 1;
+  // Scale phones via font size, not transform: a scaled layer this big (480x190 cells)
+  // exceeds iOS Safari's GPU limits and renders blank while panning.
+  const baseFont = phone ? 11 : 15;
+  const font = phone ? baseFont * Math.min(1.3, (vw - 24) / (st.fit * CW * baseFont)) : baseFont;
 
   const [drag, setDrag] = useState({ x: 0, y: 0 });
   const [dragging, setDragging] = useState(false);
@@ -88,7 +90,7 @@ export default function TreeWorld({ html, signs, stations }: { html: string; sig
         ref={worldRef}
         className={`tree-world${dragging ? " is-dragging" : ""}`}
         style={{
-          transform: `translate(calc(50vw + ${drag.x}px), calc(${phone ? "45svh" : "50svh"} + ${drag.y}px)) scale(${scale}) translate(${tx}px, ${ty}px)`,
+          transform: `translate(calc(50vw + ${drag.x}px), calc(${phone ? "45svh" : "50svh"} + ${drag.y}px)) translate(${tx}px, ${ty}px)`,
         }}
       >
         <pre className="tree-art" aria-hidden="true" dangerouslySetInnerHTML={{ __html: html }} />
